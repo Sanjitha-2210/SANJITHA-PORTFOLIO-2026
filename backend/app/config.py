@@ -12,8 +12,13 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     
-    # Database
-    DATABASE_URL: str = f"sqlite:///{os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'portfolio.db')).replace('\\', '/')}"
+    # Database: check current directory or parent directory for portfolio.db
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL",
+        f"sqlite:///{os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'portfolio.db')).replace('\\', '/')}"
+        if os.path.exists(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'portfolio.db')))
+        else f"sqlite:///{os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'portfolio.db')).replace('\\', '/')}"
+    )
     
     # Storage (Cloudinary optional, fallback to local uploads)
     CLOUDINARY_URL: Optional[str] = None
