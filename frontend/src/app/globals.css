@@ -1,0 +1,449 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ======================================================== */
+  /* LIGHT MODE (Cream & Forest Green from User Specifications) */
+  /* ======================================================== */
+  --background: #F3EFE6;                     /* Background: Cream */
+  --foreground: #1F2A24;                     /* Text on cream */
+  --text-secondary: #2E362F;                 /* High-contrast readable secondary text on cream */
+  --text-tan: #7A5C30;                       /* Tan text on cream (numbers, labels) */
+  --btn-bg: #243A2F;                         /* Buttons: Forest green */
+  --btn-text: #EDE8DC;                       /* Text on forest green buttons: Cream */
+  --btn-hover: #1A2C23;                      /* Forest green hover */
+  --btn-tan: #8A6A3C;                        /* Secondary tan button */
+  --btn-tan-text: #FFFFFF;                   /* Text on tan button */
+  --btn-tan-hover: #73542C;
+  --dark-panel: #243A2F;                     /* Dark panels, badge circle */
+  --badge-circle: #243A2F;                   /* Badge circle */
+  --badge-circle-text: #EDE8DC;              /* Text inside badge circle */
+  --border: #D6CFBF;                         /* Borders */
+  --border-subtle: rgba(36, 58, 47, 0.1);    /* Subtle border */
+  --surface: #E8E2D5;                        /* Surface */
+  --surface-card: #FAF7F0;                   /* Card surface */
+  --surface-card-hover: #FFFFFF;             /* Card hover */
+  --card-bg: rgba(250, 247, 240, 0.88);      /* Glass card */
+  --panel-bg: rgba(243, 239, 230, 0.95);     /* Glass panel */
+  --halo-orbit: #8A6A3C;                     /* Halo orbit ring */
+  --halo-orbit-glow: rgba(138, 106, 60, 0.35);/* Halo glow */
+  --halo-arch: #243A2F;                      /* Arching vertical ring */
+  --star-color: #7A5C30;                     /* Twinkling stars */
+  --tag-bg: rgba(36, 58, 47, 0.08);          /* Tag background */
+  --tag-text: #243A2F;                       /* Tag text */
+  --tag-border: rgba(36, 58, 47, 0.16);      /* Tag border */
+  --scrollbar-bg: #F3EFE6;
+  --scrollbar-thumb: #D6CFBF;
+  --scrollbar-thumb-hover: #B8B09E;
+  --name-grad-from: #8A6A3C;
+  --name-grad-to: #6B4F27;
+}
+
+.dark {
+  /* ======================================================== */
+  /* DARK MODE (Dark Forest Green & Tan from User Specifications) */
+  /* ======================================================== */
+  --background: #111A16;                     /* Background: Very dark forest green */
+  --foreground: #EDE8DC;                     /* Main text: Warm cream */
+  --text-secondary: #BDB7A8;                 /* Secondary text */
+  --text-tan: #D4B07C;                       /* Lighter tan (icons, small labels, outlines) */
+  --btn-bg: #B08D5E;                         /* Buttons and accent: Tan */
+  --btn-text: #17140E;                       /* Text on tan buttons */
+  --btn-hover: #C5A06E;                      /* Tan hover */
+  --btn-tan: #B08D5E;                        /* Accent tan */
+  --btn-tan-text: #17140E;
+  --btn-tan-hover: #C5A06E;
+  --dark-panel: #16221D;                     /* Dark panels, badge circle */
+  --badge-circle: #16221D;                   /* Badge circle */
+  --badge-circle-text: #EDE8DC;              /* Text inside badge circle */
+  --border: rgba(237, 232, 220, 0.16);       /* Card and border tint: cream at 16% */
+  --border-subtle: rgba(237, 232, 220, 0.06);/* Cream at 6% */
+  --surface: #16221D;                        /* Forest surface */
+  --surface-card: rgba(237, 232, 220, 0.04); /* Tinted card surface */
+  --surface-card-hover: rgba(237, 232, 220, 0.08); /* Card hover */
+  --card-bg: rgba(22, 34, 29, 0.75);         /* Glass card */
+  --panel-bg: rgba(17, 26, 22, 0.90);        /* Glass panel */
+  --halo-orbit: #D4B07C;                     /* Halo orbit ring */
+  --halo-orbit-glow: rgba(212, 176, 124, 0.55);/* Halo glow */
+  --halo-arch: #B08D5E;                      /* Arching vertical ring */
+  --star-color: #E6CDA3;                     /* Twinkling stars */
+  --tag-bg: rgba(237, 232, 220, 0.06);       /* Tag background */
+  --tag-text: #EDE8DC;                       /* Tag text */
+  --tag-border: rgba(237, 232, 220, 0.16);   /* Tag border */
+  --scrollbar-bg: #111A16;
+  --scrollbar-thumb: rgba(237, 232, 220, 0.20);
+  --scrollbar-thumb-hover: rgba(237, 232, 220, 0.35);
+  --name-grad-from: #E6CDA3;
+  --name-grad-to: #C6A06B;
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Luxury Glass panels */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: var(--surface-card-hover);
+  border-color: var(--text-tan);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* Name highlight gradient */
+.text-gradient-name {
+  background: linear-gradient(135deg, var(--name-grad-from) 0%, var(--name-grad-to) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ambient Aurora smooth background */
+.bg-ambient-aurora {
+  position: relative;
+  background-color: var(--background);
+}
+
+/* Remove legacy box grid lines */
+.bg-cyber-grid {
+  background-image: none !important;
+}
+
+/* Ambient Aurora animations */
+@keyframes aurora-drift-1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-35px, 25px, 0) scale(1.08);
+  }
+}
+
+@keyframes aurora-drift-2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(30px, -20px, 0) scale(1.05);
+  }
+}
+
+@keyframes aurora-pulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.38;
+    transform: translate3d(-50%, -15px, 0) scale(1.06);
+  }
+}
+
+.animate-aurora-drift-1 {
+  animation: aurora-drift-1 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-aurora-drift-2 {
+  animation: aurora-drift-2 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-aurora-pulse {
+  animation: aurora-pulse 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Cosmic Orbit and Halo Animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    opacity: 0.85;
+    box-shadow: 0 0 25px var(--halo-orbit-glow), inset 0 0 15px var(--halo-orbit-glow);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 45px var(--halo-orbit-glow), inset 0 0 25px var(--halo-orbit-glow);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  20%, 60% { transform: rotate(14deg); }
+  40%, 80% { transform: rotate(-14deg); }
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 4s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-wave {
+  animation: wave 2.5s infinite;
+}
+
+/* Robot Chatbot Companion Animations */
+@keyframes robot-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(1.5deg);
+  }
+}
+
+@keyframes robot-shadow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(0.75);
+    opacity: 0.18;
+  }
+}
+
+@keyframes robot-spin {
+  0% {
+    transform: perspective(700px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(700px) rotateY(180deg) scale(1.06);
+  }
+  100% {
+    transform: perspective(700px) rotateY(360deg);
+  }
+}
+
+@keyframes robot-blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes robot-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.25), 0 0 40px rgba(45, 90, 63, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(52, 211, 153, 0.45), 0 0 60px rgba(45, 90, 63, 0.35);
+  }
+}
+
+.animate-robot-float {
+  animation: robot-float 4.5s ease-in-out infinite;
+}
+
+.animate-robot-shadow {
+  animation: robot-shadow 4.5s ease-in-out infinite;
+}
+
+.animate-robot-spin {
+  animation: robot-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-robot-blink {
+  animation: robot-blink 4s infinite;
+  transform-origin: center;
+}
+
+.animate-robot-glow {
+  animation: robot-glow 3.5s ease-in-out infinite;
+}
+
+@keyframes dash-flow {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-dash-flow {
+  animation: dash-flow 1.2s linear infinite;
+}
+
+/* ======================================================== */
+/* RADAR SCROLL REVEAL & BLIP BLOOM ANIMATIONS */
+/* ======================================================== */
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ring-expand {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  75% {
+    transform: scale(1.03);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes blip-bloom {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes blip-ripple {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes pill-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes crosshair-draw {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spotlight-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
