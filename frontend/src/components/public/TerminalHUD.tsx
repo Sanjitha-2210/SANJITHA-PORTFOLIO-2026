@@ -82,7 +82,6 @@ export default function TerminalHUD({
               <div><span className="text-emerald-400 font-mono font-bold">skills</span> - Display technical stack</div>
               <div><span className="text-emerald-400 font-mono font-bold">experience</span> - Career timeline</div>
               <div><span className="text-emerald-400 font-mono font-bold">certs</span> - Accredited credentials</div>
-              <div><span className="text-emerald-400 font-mono font-bold">admin</span> - Jump to Admin CMS portal</div>
               <div><span className="text-emerald-400 font-mono font-bold">clear</span> - Clear terminal buffer</div>
               <div><span className="text-emerald-400 font-mono font-bold">exit</span> - Close terminal HUD</div>
             </div>
@@ -188,14 +187,6 @@ export default function TerminalHUD({
             ))}
           </div>
         );
-        break;
-
-      case "admin":
-        outputNode = <p className="text-xs text-yellow-400">Navigating to Admin CMS...</p>;
-        setTimeout(() => {
-          onClose();
-          router.push("/admin/login");
-        }, 600);
         break;
 
       case "clear":
