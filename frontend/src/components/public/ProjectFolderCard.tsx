@@ -10,46 +10,42 @@ interface ProjectFolderCardProps {
   onOpenDetails: (project: Project) => void;
 }
 
-// Generate short acronym or badge for the top of the inner sheet (e.g. BLE, AURA, RUST, etc.)
+// Universal function to extract the project's brand name / short title
 function getProjectAcronym(project: Project): string {
-  const title = project.title.toUpperCase();
-  if (title.includes("TOUREZY")) return "TOUREZY";
-  if (title.includes("TOURIST")) return "TOUREZY";
-  if (title.includes("AURASPHERE")) return "AURA";
-  if (title.includes("HYPERPULSE")) return "PULSE";
-  if (title.includes("COGNIFLOW")) return "FLOW";
-  if (title.includes("VELOCE")) return "LSM";
-  if (title.includes("CAMPUSSYNC")) return "BLE";
-  if (title.includes("BLOG")) return "BLOG";
-
-  // Check tags
-  const tags = project.tags ? project.tags.split(",").map((t) => t.trim().toUpperCase()) : [];
-  for (const tag of tags) {
-    if (tag.includes("FASTAPI")) return "API";
-    if (tag.includes("REACT")) return "REACT";
-    if (tag.includes("NEXT")) return "NEXT";
-    if (tag.includes("PYTHON")) return "PYTHON";
-    if (tag.includes("DOCKER")) return "DOCKER";
-    if (tag.includes("BLE")) return "BLE";
-  }
-
-  // Fallback to first word of title
-  const firstWord = project.title.split(" ")[0].replace(/[^A-Za-z]/g, "").toUpperCase();
-  return firstWord.slice(0, 8) || "SPEC";
-}
-
-// Extract concise subtitle for the inner sheet header without cutting off mid-word
-function getProjectSubtitle(project: Project): string {
-  // If title has subtitle after em-dash, en-dash, or colon (e.g. "Smart Tourist Safety System — TourEzy")
+  // 1. If title contains a separator like " — ", " - ", or ":", extract the project brand name
+  // E.g. "Smart Tourist Safety System — TourEzy" -> "TOUREZY"
   const parts = project.title.split(/\s*[—–:\-]\s*/);
   if (parts.length > 1 && parts[1].trim()) {
+    const secondPart = parts[1].trim().replace(/[^A-Za-z0-9 ]/g, "").toUpperCase();
+    if (secondPart.length <= 14) {
+      return secondPart;
+    }
+  }
+
+  // 2. Otherwise take the first 1-2 words of the title (e.g. "Blog Platform" -> "BLOG PLATFORM")
+  const words = project.title.trim().split(/\s+/);
+  if (words.length >= 2 && (words[0].length + words[1].length <= 14)) {
+    return `${words[0]} ${words[1]}`.toUpperCase();
+  }
+  return words[0].toUpperCase();
+}
+
+// Universal function to extract a clean subtitle or category for any project
+function getProjectSubtitle(project: Project): string {
+  // If title has a descriptive front part (e.g. "Smart Tourist Safety System — TourEzy"), use the front part
+  const parts = project.title.split(/\s*[—–:\-]\s*/);
+  if (parts.length > 1 && parts[0].trim()) {
     return parts[0].trim().toLowerCase();
   }
 
-  // Otherwise, use category descriptor
+  // Otherwise, use the category
   if (project.category) {
     return project.category.toLowerCase();
   }
+
+  // Fallback to first few words of summary
+  return project.summary.slice(0, 30).toLowerCase();
+}
 
   // Or extract clean first 4-5 words of summary without slicing mid-word
   const words = project.summary.replace(/^(developed|built|created|engineered|designed)\s+(a\s+)?/i, "").split(/\s+/);
