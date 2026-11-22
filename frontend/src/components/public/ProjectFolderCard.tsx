@@ -13,6 +13,8 @@ interface ProjectFolderCardProps {
 // Generate short acronym or badge for the top of the inner sheet (e.g. BLE, AURA, RUST, etc.)
 function getProjectAcronym(project: Project): string {
   const title = project.title.toUpperCase();
+  if (title.includes("TOUREZY")) return "TOUREZY";
+  if (title.includes("TOURIST")) return "TOUREZY";
   if (title.includes("AURASPHERE")) return "AURA";
   if (title.includes("HYPERPULSE")) return "PULSE";
   if (title.includes("COGNIFLOW")) return "FLOW";
@@ -33,20 +35,20 @@ function getProjectAcronym(project: Project): string {
 
   // Fallback to first word of title
   const firstWord = project.title.split(" ")[0].replace(/[^A-Za-z]/g, "").toUpperCase();
-  return firstWord.slice(0, 6) || "SPEC";
+  return firstWord.slice(0, 8) || "SPEC";
 }
 
 // Extract concise subtitle for the inner sheet header without cutting off mid-word
 function getProjectSubtitle(project: Project): string {
-  // If title has subtitle after colon or dash (e.g. "Blog Platform - PhobosQ Internship")
-  const parts = project.title.split(/:\s*|\s*-\s*/);
+  // If title has subtitle after em-dash, en-dash, or colon (e.g. "Smart Tourist Safety System — TourEzy")
+  const parts = project.title.split(/\s*[—–:\-]\s*/);
   if (parts.length > 1 && parts[1].trim()) {
-    return parts[1].trim().toLowerCase();
+    return parts[0].trim().toLowerCase();
   }
 
   // Otherwise, use category descriptor
   if (project.category) {
-    return `${project.category.toLowerCase()} architecture`;
+    return project.category.toLowerCase();
   }
 
   // Or extract clean first 4-5 words of summary without slicing mid-word
