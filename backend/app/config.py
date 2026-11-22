@@ -20,11 +20,11 @@ class Settings(BaseSettings):
         else f"sqlite:///{os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'portfolio.db')).replace('\\', '/')}"
     )
     
-    # Storage (Cloudinary optional, fallback to local uploads)
-    CLOUDINARY_URL: Optional[str] = None
-    CLOUDINARY_CLOUD_NAME: Optional[str] = None
-    CLOUDINARY_API_KEY: Optional[str] = None
-    CLOUDINARY_API_SECRET: Optional[str] = None
+    # Storage (Cloudinary default credentials with environment override)
+    CLOUDINARY_URL: Optional[str] = os.getenv("CLOUDINARY_URL", None)
+    CLOUDINARY_CLOUD_NAME: Optional[str] = os.getenv("CLOUDINARY_CLOUD_NAME", "glpoxplc")
+    CLOUDINARY_API_KEY: Optional[str] = os.getenv("CLOUDINARY_API_KEY", "555972184652529")
+    CLOUDINARY_API_SECRET: Optional[str] = os.getenv("CLOUDINARY_API_SECRET", "oqdA6o5efjZvQecPciWFifuMZH4")
     
     # Local Uploads directory
     UPLOAD_DIR: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads")
