@@ -181,15 +181,40 @@ export default function AdminProfilePage() {
               className="w-full px-3 py-2 rounded-xl bg-surface border border-border text-foreground focus:outline-none focus:border-text-tan"
             />
           </div>
-          <div>
-            <label className="block font-mono text-text-secondary mb-1">Resume Download Link (PDF / Cloudinary URL)</label>
-            <input
-              type="url"
-              value={formData.resume_url || ""}
-              onChange={(e) => setFormData({ ...formData, resume_url: e.target.value })}
-              className="w-full px-3 py-2 rounded-xl bg-surface border border-border text-foreground focus:outline-none focus:border-text-tan"
+        <div>
+          <label className="block font-mono text-text-secondary mb-1">Resume / CV Document (PDF / Link)</label>
+          <div className="space-y-3 p-4 rounded-2xl bg-surface border border-border">
+            <MediaUploader
+              label="Upload Resume (PDF / Doc)"
+              currentUrl={formData.resume_url}
+              mediaType="any"
+              onUploadSuccess={(url) => setFormData({ ...formData, resume_url: url })}
             />
+            <div>
+              <label className="block text-xs font-mono text-text-secondary mb-1">Or paste direct PDF / Drive / Cloudinary URL:</label>
+              <input
+                type="url"
+                value={formData.resume_url || ""}
+                onChange={(e) => setFormData({ ...formData, resume_url: e.target.value })}
+                placeholder="https://.../resume.pdf"
+                className="w-full px-3 py-2 rounded-xl bg-surface-card border border-border text-foreground focus:outline-none focus:border-text-tan text-sm font-mono"
+              />
+            </div>
+            {formData.resume_url && (
+              <div className="flex items-center gap-2 pt-1 text-xs">
+                <span className="text-emerald-500 font-mono">✓ Active Resume:</span>
+                <a
+                  href={formData.resume_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-tan hover:underline truncate max-w-md font-mono"
+                >
+                  {formData.resume_url}
+                </a>
+              </div>
+            )}
           </div>
+        </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

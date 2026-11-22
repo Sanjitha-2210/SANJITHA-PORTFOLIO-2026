@@ -202,6 +202,16 @@ export default function EducationSection({ education, milestones }: EducationSec
     order_index: 2,
   };
 
+  // Dynamically parse numeric score from education metrics (e.g., "CGPA: 8.53/10" -> 8.53, "88.5%" -> 88.5)
+  const parseNumericScore = (metricStr: string | undefined, defaultVal: number): number => {
+    if (!metricStr) return defaultVal;
+    const match = metricStr.match(/(\d+(\.\d+)?)/);
+    return match ? parseFloat(match[1]) : defaultVal;
+  };
+
+  const targetHsc = parseNumericScore(hscItem.metrics, 88.5);
+  const targetBtech = parseNumericScore(bTechItem.metrics, 8.53);
+
   const hscTags = Array.isArray(hscItem.tags)
     ? hscItem.tags
     : typeof hscItem.tags === "string"
@@ -238,8 +248,6 @@ export default function EducationSection({ education, milestones }: EducationSec
   useEffect(() => {
     if (!inView) return;
 
-    const targetHsc = 88.5;
-    const targetBtech = 8.7;
     const duration = 1400; // ms
     const startTime = performance.now();
 
@@ -249,8 +257,8 @@ export default function EducationSection({ education, milestones }: EducationSec
       // Smooth cubic ease-out curve
       const ease = 1 - Math.pow(1 - progress, 3);
 
-      setAnimatedHscScore(parseFloat((ease * targetHsc).toFixed(1)));
-      setAnimatedBtechScore(parseFloat((ease * targetBtech).toFixed(1)));
+      setAnimatedHscScore(parseFloat((ease * targetHsc).toFixed(2)));
+      setAnimatedBtechScore(parseFloat((ease * targetBtech).toFixed(2)));
 
       if (progress < 1) {
         requestAnimationFrame(animateScores);
@@ -262,7 +270,7 @@ export default function EducationSection({ education, milestones }: EducationSec
 
     const frame = requestAnimationFrame(animateScores);
     return () => cancelAnimationFrame(frame);
-  }, [inView]);
+  }, [inView, targetHsc, targetBtech]);
 
   // ==========================================
   // REAL-TIME AUTOMATIC DATE & TIMELINE ENGINE
@@ -496,7 +504,7 @@ export default function EducationSection({ education, milestones }: EducationSec
               {/* Circular Gauge for CGPA with Live Count-Up */}
               <div className="mt-auto pb-1">
                 <CircularScoreGauge
-                  score={animatedBtechScore.toFixed(1)}
+                  score={animatedBtechScore.toFixed(2)}
                   percentage={inView ? (animatedBtechScore / 10) * 100 : 0}
                   label="CGPA / 10"
                   strokeColor="#D4B07C"
