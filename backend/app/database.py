@@ -5,6 +5,11 @@ from app.config import settings
 db_url = settings.DATABASE_URL
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
+# Clean libpq-specific parameters that standard psycopg2 may reject
+if "&channel_binding=require" in db_url:
+    db_url = db_url.replace("&channel_binding=require", "")
+if "?channel_binding=require" in db_url:
+    db_url = db_url.replace("?channel_binding=require", "")
 
 engine = create_engine(
     db_url,
