@@ -21,13 +21,17 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   const rawResumeUrl = profile?.resume_url;
-  // If the resume is uploaded to Cloudinary as a PDF, Cloudinary blocks raw PDF delivery by default (401 ACL failure).
-  // Converting .pdf to .jpg (or .png) renders the high-res first page of the resume crystal-clear as an image!
-  const resumePreviewUrl = rawResumeUrl
-    ? rawResumeUrl.includes("res.cloudinary.com") && /\.pdf(\?.*)?$/i.test(rawResumeUrl)
-      ? rawResumeUrl.replace(/\.pdf(\?.*)?$/i, ".jpg")
-      : rawResumeUrl
-    : "";
+  // If the resume is uploaded to Cloudinary as a PDF, generate URLs for all pages (e.g. page 1 and page 2)
+  const isCloudinaryPdf = Boolean(rawResumeUrl && rawResumeUrl.includes("res.cloudinary.com") && /\.pdf(\?.*)?$/i.test(rawResumeUrl));
+
+  const resumePages = isCloudinaryPdf
+    ? [
+        rawResumeUrl!.replace("/upload/", "/upload/pg_1/").replace(/\.pdf(\?.*)?$/i, ".jpg"),
+        rawResumeUrl!.replace("/upload/", "/upload/pg_2/").replace(/\.pdf(\?.*)?$/i, ".jpg"),
+      ]
+    : rawResumeUrl
+    ? [rawResumeUrl]
+    : [];
 
   const resumeDownloadUrl = rawResumeUrl
     ? rawResumeUrl.includes("res.cloudinary.com") && /\.pdf(\?.*)?$/i.test(rawResumeUrl)
@@ -36,9 +40,9 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
     : "";
 
   const isRawPdfIframe = Boolean(
-    resumePreviewUrl &&
-    /\.pdf(\?.*)?$/i.test(resumePreviewUrl) &&
-    !resumePreviewUrl.includes("res.cloudinary.com")
+    !isCloudinaryPdf &&
+    rawResumeUrl &&
+    /\.pdf(\?.*)?$/i.test(rawResumeUrl)
   );
 
   return (
@@ -133,17 +137,17 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
           onClick={() => setIsResumeOpen(false)}
           className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in"
         >
-          {/* Glass Card Container (Snug fit to document without letterbox bars) */}
+          {/* Glass Card Container (+20% wider with max-w-5xl, snug fit, comfortable scrolling) */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-auto max-w-4xl bg-card-bg backdrop-blur-2xl border border-border/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]"
+            className="relative w-full max-w-5xl bg-card-bg backdrop-blur-2xl border border-border/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]"
           >
             {/* Glass Card Header */}
             <div className="p-4 sm:px-6 bg-surface/80 backdrop-blur-md border-b border-border/80 flex items-center justify-between gap-4">
               <div className="flex items-center gap-2.5">
                 <FileText className="w-4 h-4 text-text-tan" />
                 <h4 className="text-xs sm:text-sm font-bold text-foreground">
-                  Resume Preview — {name}
+                  Resume Preview — {name} {resumePages.length > 1 && `(${resumePages.length} Pages)`}
                 </h4>
               </div>
               <button
@@ -155,21 +159,31 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
               </button>
             </div>
 
-            {/* Modal Body: Clean Resume Render */}
-            <div className="p-3 sm:p-5 flex items-center justify-center overflow-auto max-h-[74vh]">
-              {resumePreviewUrl ? (
+            {/* Modal Body: Multi-page high-definition render */}
+            <div className="p-4 sm:p-6 flex flex-col items-center gap-6 overflow-y-auto max-h-[76vh]">
+              {resumePages.length > 0 ? (
                 isRawPdfIframe ? (
                   <iframe
-                    src={`${resumePreviewUrl}#toolbar=0&navpanes=0`}
+                    src={`${rawResumeUrl}#toolbar=0&navpanes=0`}
                     title="Resume Document"
-                    className="w-[82vw] max-w-3xl h-[68vh] rounded-2xl border border-border/60 shadow-lg bg-white"
+                    className="w-full h-[72vh] rounded-2xl border border-border/60 shadow-lg bg-white"
                   />
                 ) : (
-                  <img
-                    src={resumePreviewUrl}
-                    alt={`${name}'s Resume`}
-                    className="max-h-[72vh] w-auto h-auto max-w-full object-contain rounded-2xl border border-border/60 shadow-lg"
-                  />
+                  resumePages.map((pageUrl, index) => (
+                    <div key={index} className="w-full flex flex-col items-center">
+                      {resumePages.length > 1 && (
+                        <div className="self-start text-[11px] font-mono text-text-secondary mb-1.5 px-2">
+                          Page {index + 1} of {resumePages.length}
+                        </div>
+                      )}
+                      <img
+                        src={pageUrl}
+                        alt={`${name}'s Resume - Page ${index + 1}`}
+                        className="w-full max-w-4xl h-auto object-contain rounded-2xl border border-border/60 shadow-lg bg-white"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))
                 )
               ) : (
                 <div className="py-20 px-8 text-center space-y-2">
