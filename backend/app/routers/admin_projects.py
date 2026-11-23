@@ -32,7 +32,10 @@ def create_project(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    slug = payload.slug.strip() if payload.slug else slugify(payload.title)
+    raw_slug = (payload.slug or "").strip()
+    slug = slugify(raw_slug) if raw_slug else slugify(payload.title)
+    if not slug:
+        slug = f"project-{db.query(Project).count() + 1}"
     
     # Check if slug exists
     existing = db.query(Project).filter(Project.slug == slug).first()
@@ -54,9 +57,13 @@ def create_project(
         status=payload.status,
         order_index=payload.order_index
     )
-    db.add(project)
-    db.commit()
-    db.refresh(project)
+    try:
+        db.add(project)
+        db.commit()
+        db.refresh(project)
+    except Exception as err:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=f"Database create failed: {str(err)}")
     return project
 
 @router.get("/{project_id}", response_model=ProjectOut)
@@ -82,11 +89,36 @@ def update_project(
         raise HTTPException(status_code=404, detail="Project not found")
 
     update_data = payload.model_dump(exclude_unset=True)
+
+    # Sanitize and ensure valid slug
+    if "slug" in update_data:
+        raw_slug = (update_data["slug"] or "").strip()
+        new_title = update_data.get("title") or project.title
+        candidate_slug = slugify(raw_slug) if raw_slug else slugify(new_title)
+        if not candidate_slug:
+            candidate_slug = f"project-{project_id}"
+            
+        conflict = db.query(Project).filter(Project.slug == candidate_slug, Project.id != project_id).first()
+        if conflict:
+            candidate_slug = f"{candidate_slug}-{project_id}"
+        update_data["slug"] = candidate_slug
+    elif not project.slug:
+        candidate_slug = slugify(project.title) or f"project-{project_id}"
+        conflict = db.query(Project).filter(Project.slug == candidate_slug, Project.id != project_id).first()
+        if conflict:
+            candidate_slug = f"{candidate_slug}-{project_id}"
+        update_data["slug"] = candidate_slug
+
     for field, value in update_data.items():
         setattr(project, field, value)
 
-    db.commit()
-    db.refresh(project)
+    try:
+        db.commit()
+        db.refresh(project)
+    except Exception as err:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=f"Database update failed: {str(err)}")
+
     return project
 
 @router.delete("/{project_id}")

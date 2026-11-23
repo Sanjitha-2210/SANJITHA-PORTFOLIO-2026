@@ -289,8 +289,12 @@ export default function AdminProjectsPage() {
     // Assemble all separate boxes into unified markdown description
     const assembledDescription = assembleSectionsIntoDescription(caseSections);
 
+    const derivedSlug = (formData.slug || "").trim() || 
+      (formData.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
     const payload: Partial<Project> = {
       ...formData,
+      slug: derivedSlug,
       description: assembledDescription,
     };
 

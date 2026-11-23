@@ -210,12 +210,17 @@ export async function adminGetProject(id: number): Promise<Project> {
 
 export async function adminCreateProject(data: Partial<Project>): Promise<Project> {
   const base = getApiBaseUrl();
+  const { id, created_at, updated_at, ...cleanData } = data as any;
   const res = await fetch(`${base}/admin/projects`, {
     method: "POST",
     headers: getHeaders(),
-    body: JSON.stringify(data),
+    body: JSON.stringify(cleanData),
   });
-  if (!res.ok) throw new Error("Failed to create project");
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    const detail = errData?.detail ? (typeof errData.detail === "string" ? errData.detail : JSON.stringify(errData.detail)) : null;
+    throw new Error(detail || `Failed to create project (HTTP ${res.status})`);
+  }
   const result = await res.json();
   notifyPortfolioUpdated();
   return result;
@@ -223,12 +228,17 @@ export async function adminCreateProject(data: Partial<Project>): Promise<Projec
 
 export async function adminUpdateProject(id: number, data: Partial<Project>): Promise<Project> {
   const base = getApiBaseUrl();
+  const { id: _, created_at, updated_at, ...cleanData } = data as any;
   const res = await fetch(`${base}/admin/projects/${id}`, {
     method: "PUT",
     headers: getHeaders(),
-    body: JSON.stringify(data),
+    body: JSON.stringify(cleanData),
   });
-  if (!res.ok) throw new Error("Failed to update project");
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    const detail = errData?.detail ? (typeof errData.detail === "string" ? errData.detail : JSON.stringify(errData.detail)) : null;
+    throw new Error(detail || `Failed to update project (HTTP ${res.status})`);
+  }
   const result = await res.json();
   notifyPortfolioUpdated();
   return result;
@@ -240,7 +250,11 @@ export async function adminDeleteProject(id: number) {
     method: "DELETE",
     headers: getHeaders(),
   });
-  if (!res.ok) throw new Error("Failed to delete project");
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    const detail = errData?.detail ? (typeof errData.detail === "string" ? errData.detail : JSON.stringify(errData.detail)) : null;
+    throw new Error(detail || `Failed to delete project (HTTP ${res.status})`);
+  }
   const result = await res.json();
   notifyPortfolioUpdated();
   return result;

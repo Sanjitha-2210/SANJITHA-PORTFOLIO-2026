@@ -40,214 +40,80 @@ def seed_database(db: Session):
     # 3. Projects
     if db.query(Project).count() == 0:
         projects = [
+        projects = [
             Project(
-                title="AuraSphere: AI-Powered Autonomous Cloud Orchestrator",
-                slug="aurasphere-autonomous-orchestrator",
-                summary="A next-gen cluster management and dynamic autoscaling system leveraging predictive ML models to slash cloud costs by 42%.",
-                description="""## Overview
-AuraSphere is an autonomous cluster management and dynamic autoscaling system leveraging predictive ML models to slash cloud costs by 42%.
-
-## Problem
-Modern Kubernetes workloads experience severe over-provisioning due to unpredictable burst traffic. Traditional reactive autoscalers lag behind spikes by 3 to 5 minutes, resulting in dropped requests and expensive unutilized head-room.
-
-## Solution
-Architected an intelligent predictive autoscaler using GRU neural networks to pre-provision compute instances 90 seconds prior to anticipated traffic spikes, coupled with automated spot-instance arbitrage.
-
-## Features
-- Real-Time Stream Ingestion: Ingests cluster telemetry over gRPC and Kafka at 150k events/sec.
-- Predictive Autoscaling: Pre-allocates spot instances based on RNN traffic forecasts.
-- Zero-Downtime Canary Rollouts: Automated health checks, circuit breaking, and progressive traffic shifting.
-- Dynamic Cost Arbitrage: Continuously rebalances workloads between on-demand and spot nodes.
-
-## Tech Stack
-Rust, Go, Python (FastAPI), Kubernetes, Next.js 15, TimescaleDB, Tailwind CSS
-
-## Architecture
-Telemetry metrics flow from DaemonSets to an asynchronous Kafka pipeline, evaluated in real time by the Rust-based inference scheduler, which commands Kubernetes API controllers to right-size node pools.
-
-## My Contributions
-- Designed and authored the Rust metrics ingestion daemon processing 150k events/sec with zero allocations.
-- Implemented the FastAPI control plane with JWT authentication and RBAC cluster access.
-- Built the interactive Next.js dashboard visualizer for live node health and cost savings.
-
-## Screenshots
-![AuraSphere Main Dashboard](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000)
-
-## Challenges
-- Challenge: Telemetry ingestion backpressure during cluster-wide bursts. -> Solved by: Implemented zero-copy circular ring buffers and partitioned Kafka consumer groups.
-- Challenge: Spot instance termination notices (2-minute deadline). -> Solved by: Built automated fast-drain canary handlers that migrate pods within 18 seconds.
-
-## Outcomes & Future Scope
-- Slashed production cloud infrastructure expenditures by 42%.
-- Maintained 99.99% service uptime during synthetic 10x traffic spikes.
-- Future Scope: Multi-cloud federation across AWS, GCP, and bare-metal nodes.""",
-                category="Distributed Systems",
-                tags="Rust,FastAPI,Kubernetes,Next.js,Kafka,Docker",
-                featured_image="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=80",
-                demo_url="https://demo.aurasphere.example.com",
-                github_url="https://github.com/example/aurasphere",
-                video_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                title="Smart Tourist Safety System — TourEzy",
+                slug="smart-tourist-safety-system-tourezy",
+                summary="Developed an AI-powered tourist safety platform featuring real-time safety scoring, live location tracking, and predictive risk alerts.\n\nThe platform combines AI-powered assistance, Aadhaar-based identity verification, GPS geofencing, and location intelligence to provide safer travel experiences.",
+                description="""<!-- meta: 2025–2026 | Generative AI System | Team -->\n\n## Problem\nTourists frequently encounter safety challenges when travelling to unfamiliar locations.\n\n## Solution\nDeveloped an integrated AI-powered safety platform featuring Aadhaar-based KYC verification, Gemini AI conversational guidance, GPS geofencing with unsafe-zone alerts, and Google Maps API location routing.\n\n## Features\n- Real-Time Location Safety: GPS-based tracking, geo-fenced unsafe-zone detection, and instant safety alerts.\n- AI-Powered Assistant: Gemini AI multimodal integration for text and image-based queries and context-aware travel recommendations.\n- Emergency Assistance: Discovery of nearby police stations and hospitals with 1-click emergency routing.\n- Identity Verification: Aadhaar-based digital KYC verification for secure tourist onboarding.\n\n## Architecture\nThe system follows a modular, AI-integrated architecture connecting mobile clients (Kotlin/Jetpack Compose) to FastAPI backend microservices, PostGIS geospatial database, and Gemini AI.\n\n## Measurable Outcomes\n- Successfully engineered an end-to-end tourist safety prototype.\n- Sub-200ms geofence evaluation using spatial indexing in PostGIS.\n\n## Future Scope\n- Offline-first geofence caching for remote trekking zones.\n- Real-time automated tourist crowd-density anomaly detection.""",
+                category="Generative AI",
+                tags="Python, FastAPI, Kotlin, Jetpack Compose, PostgreSQL, PostGIS, Redis, Docker, LangChain, OpenAI API, Gemini API, Google Maps SDK, Firebase Cloud Messaging, MQTT, Elasticsearch, JWT",
+                featured_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795362527/portfolio_cms/aavfbhkqti8swv2pdwml.jpg",
+                demo_url="",
+                github_url="https://github.com/Sanjitha-2210/TourEzy",
+                video_url="",
                 is_featured=True,
                 status="published",
                 order_index=1
             ),
             Project(
-                title="HyperPulse: Ultra Low-Latency Financial Visualizer",
-                slug="hyperpulse-low-latency-visualizer",
-                summary="Sub-millisecond order-book visualizer and algorithmic trading dashboard with WebGL canvas rendering.",
-                description="""## Overview
-Sub-millisecond order-book visualizer and algorithmic trading dashboard with hardware-accelerated WebGL canvas rendering.
-
-## Problem
-Standard DOM and SVG-based charting libraries bottleneck at 60 FPS when handling high-frequency market depth with 10,000+ price ticks per second, causing browser freezes and missed execution windows.
-
-## Solution
-Engineered a custom GPU-accelerated WebGL rendering pipeline connected to low-latency WebSocket feeds with binary protocol unpacking and off-screen canvas workers.
-
-## Features
-- High-Frequency Visualization: Renders 10,000+ real-time bid/ask tick updates per second using custom WebGL shaders.
-- Reactive State Architecture: Built on zero-allocation circular buffer data structures in TypeScript.
-- Cross-Exchange Aggregation: Real-time WebSocket multiplexing across 6 major global financial hubs.
-- Microsecond Timestamping: High-precision order-book event replay with latency heatmaps.
-
-## Tech Stack
-Next.js, TypeScript, WebGL, WebSockets, High-Frequency
-
-## Architecture
-Incoming WebSocket market ticks are decoded in a Web Worker via ArrayBuffers, queued in circular buffers, and drawn to canvas through custom instanced WebGL shaders.
-
-## My Contributions
-- Authored custom GLSL shaders for real-time order-book depth and volume profile rendering.
-- Engineered memory-efficient ring buffer queues eliminating garbage collection pauses during live trading.
-- Implemented responsive dark-mode UI with floating HUD widgets and configurable layout grids.
-
-## Screenshots
-![HyperPulse Order Book](https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=1000)
-
-## Challenges
-- Challenge: Garbage collection pauses caused stuttering frame rates. -> Solved by: Replaced all dynamic object allocations in hot loops with fixed-size TypedArrays.
-- Challenge: Network jitter across global financial feeds. -> Solved by: Implemented client-side tick interpolation and adaptive reconnect fallbacks.
-
-## Outcomes & Future Scope
-- Sustained locked 60 FPS rendering under 15,000 tick/sec throughput.
-- Reduced client-side memory footprint by 68%.
-- Future Scope: Integration with WebGPU compute shaders for predictive volatility indicators.""",
-                category="FinTech & WebGL",
-                tags="Next.js,TypeScript,WebGL,WebSockets,High-Frequency",
-                featured_image="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=1000&auto=format&fit=crop&q=80",
-                demo_url="https://hyperpulse.example.com",
-                github_url="https://github.com/example/hyperpulse",
+                title="HireHub — Placement Management Portal",
+                slug="hirehub-placement-management-portal",
+                summary="Developed a full-stack web application to streamline campus placement activities, company management, job postings, student applications, interviews, and offer management.",
+                description="""<!-- meta: 2026 | Full-Stack Web | Team -->\n\n## Problem\nTraditional campus placement operations rely on fragmented spreadsheets, manual email chains, and disconnected communication channels between Career Development Cells (CDC), recruiters, and students.\n\n## Solution\nEngineered HireHub as a comprehensive full-stack placement portal featuring dedicated portals for CDC administrators, company recruiters, and students.\n\n## Features\n- Dedicated Portals: Specialized dashboards tailored for CDC administrators, company recruiters, and student applicants.\n- Automated Eligibility Verification: Instant verification of candidate eligibility based on CGPA, backlogs, and departmental prerequisites.\n- Structured Job Discovery & Application: 1-click job applications with real-time status tracking across interview stages.\n\n## Measurable Outcomes\nDeveloped a centralized platform for campus placement activities.\nEstablished dedicated interfaces for CDC administrators and students.\nOrganized student, company, and recruitment information.\nSimplified job eligibility verification workflows.\nEnabled structured job discovery and application management.\nImproved visibility into placement-related activities.\nGained practical experience in full-stack development, database management, API integration, and system testing.\n\n## Future Scope\nAI-powered job recommendations based on student profiles and skills.\nAutomated resume parsing and candidate profiling.\nIntelligent placement analytics and predictive insights.\nAutomated email and notification services.\nInterview scheduling and recruitment calendar integration.\nIntegration with external applicant tracking systems.\nAdvanced placement performance dashboards.\nAutomated recruitment reports and institutional analytics.""",
+                category="Full-Stack Web",
+                tags="FastAPI, React.js, TypeScript, PostgreSQL, SQLAlchemy, Alembic, Redis, JWT, Docker, Tailwind CSS",
+                featured_image="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1000&auto=format&fit=crop&q=80",
+                demo_url="",
+                github_url="https://github.com/Sanjitha-2210/HireHub",
+                video_url="",
                 is_featured=True,
                 status="published",
                 order_index=2
             ),
             Project(
-                title="CogniFlow: Multimodal Agentic Workflow Engine",
-                slug="cogniflow-agentic-workflow-engine",
-                summary="Enterprise agentic system allowing teams to deploy autonomous AI swarms with human-in-the-loop guardrails.",
-                description="""## Overview
-Enterprise agentic system allowing teams to deploy autonomous AI swarms with human-in-the-loop guardrails, multimodal reasoning, and persistent vector memory.
-
-## Problem
-Autonomous LLM agents frequently suffer from hallucinations, infinite loops, and uncoordinated task execution when collaborating in multi-step enterprise workflows.
-
-## Solution
-Developed a hierarchical agent orchestration engine using directed acyclic graphs (DAGs), dynamic tool evaluation, and consensus voting mechanisms with human review checkpoints.
-
-## Features
-- Hierarchical Agent Planning: Multi-agent consensus mechanism with dynamic tool evaluation.
-- Vector Memory Core: Hybrid dense and sparse lexical search over 20M+ enterprise documents.
-- Sandboxed Execution: Ephemeral containerized runners for generated Python, SQL, and Bash code.
-- Interactive Debugger: Real-time trace visualizer for agent tool calls and reasoning chains.
-
-## Tech Stack
-FastAPI, Python, PyTorch, Next.js, PostgreSQL, LangChain
-
-## Architecture
-User instructions pass to a Supervisor Planner agent that breaks tasks into DAG sub-tasks, delegates to specialized Worker agents with isolated memory, and verifies outputs before final synthesis.
-
-## My Contributions
-- Designed the supervisor planner agent architecture with dynamic reflection and retry logic.
-- Implemented asynchronous vector embeddings and hybrid search over PostgreSQL pgvector.
-- Built the real-time agent trace visualization panel in Next.js.
-
-## Screenshots
-![CogniFlow Orchestration](https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1000)
-
-## Challenges
-- Challenge: Agent execution loops during complex recursive tasks. -> Solved by: Added strict max-depth recursion limits and dynamic timeout circuit breakers.
-- Challenge: Token budget explosion across multi-agent turns. -> Solved by: Implemented automatic context compression and semantic deduplication.
-
-## Outcomes & Future Scope
-- Achieved 94% task completion rate on complex multi-step reasoning benchmarks.
-- Lowered token consumption by 35% through semantic memory retrieval.
-- Future Scope: Multi-modal vision and audio reasoning agents with local on-premise model execution.""",
-                category="AI / Machine Learning",
-                tags="FastAPI,Python,PyTorch,Next.js,PostgreSQL,LangChain",
+                title="Personal AI Agent — Enterprise-Grade Intelligent Assistant",
+                slug="personal-ai-agent-enterprise-intelligent-assistant",
+                summary="Developed an AI agent platform featuring multi-agent orchestration, persistent memory, and Retrieval-Augmented Generation (RAG) for intelligent conversational assistance.",
+                description="""<!-- meta: 2026 | Generative AI System | Lead -->\n\n## Problem\nStandard conversational bots operate in stateless isolation, lack long-term persistent memory across sessions, and cannot interact deterministically with external developer tools.\n\n## Solution\nArchitected an enterprise-grade agent platform using LangGraph for multi-agent state machines, ChromaDB for vector retrieval over enterprise documents, and Model Context Protocol (MCP) servers.\n\n## Features\n- Multi-Agent Orchestration: Autonomous agent workflows using LangGraph with human-in-the-loop validation.\n- Hybrid Semantic Retrieval (RAG): Dense vector search and semantic chunking powered by ChromaDB.\n- Model Context Protocol (MCP): Extensible tool integration connecting local and cloud APIs seamlessly.\n\n## Measurable Outcomes\n- Successfully deployed a production-ready agent platform supporting multi-agent collaboration.\n- Reduced document lookup and synthesis latency from minutes to under 2 seconds.\n\n## Future Scope\n- Voice-driven multimodal interface with real-time audio streaming.\n- Autonomous code generation sandbox with ephemeral container isolation.""",
+                category="Generative AI",
+                tags="Python, FastAPI, React, TypeScript, PostgreSQL, SQLAlchemy, Alembic, Redis, Docker, LangChain, LangGraph, OpenAI API, Ollama, ChromaDB, MCP Servers, JWT",
                 featured_image="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1000&auto=format&fit=crop&q=80",
-                demo_url="https://cogniflow.example.com",
-                github_url="https://github.com/example/cogniflow",
+                demo_url="",
+                github_url="https://github.com/Sanjitha-2210/Personal-AI-Agent",
+                video_url="",
                 is_featured=True,
                 status="published",
                 order_index=3
             ),
             Project(
-                title="VeloceDB: Embedded In-Memory LSM-Tree Storage Engine",
-                slug="velocedb-lsm-storage-engine",
-                summary="Lightweight, crash-safe, write-optimized key-value store crafted for edge computing and local caching.",
-                description="""## Overview
-Lightweight, crash-safe, write-optimized key-value storage engine crafted for edge computing and local caching.
-
-## Problem
-Traditional B-Tree databases suffer from severe write amplification on random write workloads, making them suboptimal for high-throughput edge event logging.
-
-## Solution
-Implemented a log-structured merge-tree (LSM-Tree) engine with Write-Ahead Logging (WAL), in-memory MemTables, bloom filters, and tiered background SSTable compaction.
-
-## Features
-- LSM-Tree Architecture: Sequential append-only disk writes providing high write throughput.
-- Fast Negative Lookups: Counting bloom filters reducing disk seeks by 85%.
-- Crash Durability: Configurable WAL flush policies ensuring zero data loss upon abrupt termination.
-- Zero External Dependencies: Pure embedded library design suitable for edge runtimes.
-
-## Tech Stack
-C++, Go, Systems Programming, LSM-Tree, Benchmarking
-
-## Architecture
-Writes hit an append-only WAL and an in-memory red-black MemTable. Once full, the MemTable freezes into an immutable SSTable and flushes to disk, maintained via leveled compaction.
-
-## My Contributions
-- Implemented the concurrency-safe MemTable and Leveled SSTable compaction algorithms.
-- Authored crash-recovery test harnesses simulating power loss during active compaction cycles.
-- Benchmarked performance against RocksDB and LevelDB under synthetic write workloads.
-
-## Screenshots
-![VeloceDB Architecture](https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000)
-
-## Challenges
-- Challenge: Read amplification during SSTable point lookups across multiple levels. -> Solved by: Built block-level bloom filters and an LRU block cache.
-- Challenge: Compaction latency spikes degrading write throughput. -> Solved by: Moved compaction routines into dedicated background worker threads with rate limiting.
-
-## Outcomes & Future Scope
-- Reached 180,000 writes/second on standard NVMe SSDs.
-- Reduced write amplification factor from 18x to 3.2x.
-- Future Scope: Persistent memory (PMEM) support and Raft-based distributed replication.""",
-                category="Systems & Databases",
-                tags="C++,Go,Systems Programming,LSM-Tree,Benchmarking",
-                featured_image="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&auto=format&fit=crop&q=80",
-                github_url="https://github.com/example/velocedb",
-                is_featured=False,
+                title="DeptConnect — Department Management Platform",
+                slug="deptconnect-department-management-platform",
+                summary="Developed a responsive department website to organize and present academic information, faculty profiles, student achievements, research activities, placements, and departmental updates.",
+                description="""<!-- meta: 2026 | Full-Stack Web | Lead -->\n\n## Problem\nAcademic departments need a modern, maintainable portal to showcase faculty credentials, student achievements, research publications, and official announcements.\n\n## Solution\nEngineered DeptConnect: a high-velocity department management platform featuring a responsive Next.js frontend, Cloudinary-backed digital asset storage, and an administrative CMS.\n\n## Features\n- Faculty & Student Directories: Comprehensive profiles showcasing credentials, publications, and student milestones.\n- Research & Publication Showcase: Curated repository of departmental publications and grants.\n- Placement Highlights & Statistics: Interactive presentation of recruiter records and placement milestones.\n\n## Measurable Outcomes\n- Successfully delivered a centralized, responsive digital hub for the department.\n- Organized academic records, faculty directories, and departmental achievements in one place.\n\n## Future Scope\n- Automated student event registration and digital ticketing.\n- Alumni networking portal with career mentorship connections.""",
+                category="Full-Stack Web",
+                tags="Next.js, React.js, TypeScript, Tailwind CSS, Python, FastAPI, SQLite, SQLAlchemy, Alembic, Cloudinary, Git, GitHub",
+                featured_image="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1000&auto=format&fit=crop&q=80",
+                demo_url="",
+                github_url="https://github.com/Sanjitha-2210/DeptConnect",
+                video_url="",
+                is_featured=True,
                 status="published",
                 order_index=4
             ),
             Project(
-                title="Draft Project: Next-Gen Quantum Simulator",
-                slug="quantum-circuit-simulator-draft",
-                summary="Simulating 32-qubit quantum state vectors on commodity GPUs using CUDA kernels.",
-                description="Work in progress draft project that must remain invisible to public visitors.",
-                category="Research",
-                tags="CUDA,Python,Quantum",
-                status="draft",
+                title="Blog Platform",
+                slug="blog-platform",
+                summary="Developed a feature-rich blogging platform during my AI/ML Engineer Internship at PhobosQ, focusing on building a scalable and secure backend using FastAPI.",
+                description="""<!-- meta: 2025 | Internship Project | Team -->\n\n## Problem\nTraditional blogging platforms face challenges with performance, content management, and asynchronous operations.\n\n## Solution\nDesigned and developed a modular backend architecture using FastAPI, JWT auth, Elasticsearch, and Celery.\n\n## Features\n- Authentication & User Management: User signup, login, OAuth2 integration, JWT authentication.\n- Advanced Search: Elasticsearch-powered full-text search with relevance ranking.\n- Background Processing: Celery and Redis for background indexing.\n\n## Measurable Outcomes\n- Successfully developed a feature-rich blogging backend using FastAPI.\n- Gained practical experience with scalable backend architecture.\n\n## Future Scope\n- AI-powered blog recommendations.\n- Automatic content categorization and tagging.""",
+                category="Full-Stack Web",
+                tags="Python, PostgreSQL, SQLAlchemy, Redis, Celery, Elasticsearch, JWT, OAuth2, AWS S3, Cloudinary, WebSockets, Docker",
+                featured_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795331508/portfolio_cms/ekp1bdwtsokhmpn87czh.jpg",
+                demo_url="",
+                github_url="https://github.com/PhobosQ-ai/Community-page",
+                video_url="https://res.cloudinary.com/glpoxplc/video/upload/v1795332885/portfolio_cms/ic1jjjyme2ymb0irgnnb.mp4",
+                is_featured=False,
+                status="published",
                 order_index=5
             )
         ]
