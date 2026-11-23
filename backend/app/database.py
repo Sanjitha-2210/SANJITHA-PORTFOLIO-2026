@@ -4,7 +4,10 @@ from app.config import settings
 
 db_url = settings.DATABASE_URL
 if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
+    db_url = db_url.replace("postgres://", "postgresql+psycopg2://", 1)
+elif db_url.startswith("postgresql://") and not db_url.startswith("postgresql+"):
+    db_url = db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+
 # Clean libpq-specific parameters that standard psycopg2 may reject
 if "&channel_binding=require" in db_url:
     db_url = db_url.replace("&channel_binding=require", "")
