@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Profile } from "@/types";
-import { Download, ArrowRight, Sparkles, X, Bot, CornerDownLeft } from "lucide-react";
+import { Download, ArrowRight, Sparkles, X, FileText } from "lucide-react";
 import ProfileCard from "./ProfileCard";
 
 interface HeroProps {
@@ -17,54 +17,11 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
     profile?.bio ||
     "I build GenAI applications that turn language models and data into tools people can actually use.";
 
-  // Assistant query & answer state
-  const [assistantQuery, setAssistantQuery] = useState("");
-  const [assistantAnswer, setAssistantAnswer] = useState<string | null>(null);
-  const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
-  const [isTyping, setIsTyping] = useState(false);
+  // Resume modal preview state
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-  const suggestedQuestions = [
-    "What are you working on now?",
-    "Show me your best project",
-    "How can I contact you?",
-  ];
-
-  const handleAskAssistant = (question: string) => {
-    const trimmed = question.trim();
-    if (!trimmed) return;
-
-    setActiveQuestion(trimmed);
-    setAssistantQuery(trimmed);
-    setIsTyping(true);
-    setAssistantAnswer(null);
-
-    const q = trimmed.toLowerCase();
-    let reply = "";
-
-    if (q.includes("working on") || q.includes("current") || q.includes("now")) {
-      reply =
-        "Right now, I'm building autonomous AI agents and fine-tuning LLM pipelines with RAG for high-throughput enterprise systems, utilizing FastAPI, Python, and Next.js.";
-    } else if (q.includes("best project") || q.includes("top project") || q.includes("show me")) {
-      reply =
-        "My spotlight project is AuraSphere — an AI-powered autonomous orchestrator leveraging predictive ML models to slash cloud costs by 42%. Check out the Projects section below for architecture and live demos!";
-    } else if (q.includes("contact") || q.includes("reach") || q.includes("email") || q.includes("hire")) {
-      reply =
-        `You can reach me directly at ${profile?.email || "sanjitha.e.dev@gmail.com"}, connect on LinkedIn, or send a message using the Contact section below. I'm always open to discussing exciting opportunities!`;
-    } else if (q.includes("skill") || q.includes("stack") || q.includes("technolog")) {
-      reply =
-        "My primary stack includes Generative AI, LLMs, AI Agents, RAG, Python, FastAPI, Machine Learning, Next.js, and TypeScript.";
-    } else {
-      reply = `Thanks for asking! I'm ${name}, a ${title} focused on building intelligent solutions using Generative AI and modern web architectures. Feel free to explore my projects below or launch CLI Mode (~) for deep system queries!`;
-    }
-
-    setTimeout(() => {
-      setAssistantAnswer(reply);
-      setIsTyping(false);
-      if (typeof window !== "undefined") {
-        window.dispatchEvent(new CustomEvent("open_chat_assistant", { detail: { query: trimmed } }));
-      }
-    }, 300);
-  };
+  const resumeUrl = profile?.resume_url;
+  const isPdf = Boolean(resumeUrl && /\.pdf(\?.*)?$/i.test(resumeUrl));
 
   return (
     <section className="relative pt-24 sm:pt-28 pb-8 sm:pb-12 min-h-[calc(100vh-4rem)] flex items-start px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
@@ -116,16 +73,15 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-3.5 pt-1">
-            {/* Download Resume Button */}
-            <a
-              href={profile?.resume_url || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3.5 sm:px-7 sm:py-4 rounded-2xl bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-sm sm:text-base transition-all shadow-md flex items-center gap-2.5 group"
+            {/* Resume Button -> Opens Glass Card Preview Modal */}
+            <button
+              type="button"
+              onClick={() => setIsResumeOpen(true)}
+              className="px-6 py-3.5 sm:px-7 sm:py-4 rounded-2xl bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-sm sm:text-base transition-all shadow-md flex items-center gap-2.5 group cursor-pointer"
             >
-              <Download className="w-4.5 h-4.5 transition-transform group-hover:-translate-y-0.5" />
-              <span>Download Resume</span>
-            </a>
+              <FileText className="w-4.5 h-4.5 transition-transform group-hover:scale-110" />
+              <span>Resume</span>
+            </button>
 
             {/* Contact Button */}
             <a
@@ -150,6 +106,91 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
         </div>
 
       </div>
+
+      {/* ======================================================== */}
+      {/* RESUME PREVIEW MODAL — GLASS CARD (MATCHES CERTIFICATE)  */}
+      {/* ======================================================== */}
+      {isResumeOpen && (
+        <div
+          onClick={() => setIsResumeOpen(false)}
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in"
+        >
+          {/* Glass Card Container (Snug fit to document without letterbox bars) */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-auto max-w-4xl bg-card-bg backdrop-blur-2xl border border-border/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]"
+          >
+            {/* Glass Card Header */}
+            <div className="p-4 sm:px-6 bg-surface/80 backdrop-blur-md border-b border-border/80 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5">
+                <FileText className="w-4 h-4 text-text-tan" />
+                <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                  Resume Preview — {name}
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsResumeOpen(false)}
+                className="px-3.5 py-1 rounded-full bg-surface-card hover:bg-surface-card-hover border border-border text-xs text-foreground font-semibold transition-all hover:scale-105 active:scale-95 shadow-xs cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+
+            {/* Modal Body: Clean Resume Render */}
+            <div className="p-3 sm:p-5 flex items-center justify-center overflow-auto max-h-[74vh]">
+              {resumeUrl ? (
+                isPdf ? (
+                  <iframe
+                    src={`${resumeUrl}#toolbar=0&navpanes=0`}
+                    title="Resume PDF"
+                    className="w-[82vw] max-w-3xl h-[68vh] rounded-2xl border border-border/60 shadow-lg bg-white"
+                  />
+                ) : (
+                  <img
+                    src={resumeUrl}
+                    alt={`${name}'s Resume`}
+                    className="max-h-[72vh] w-auto h-auto max-w-full object-contain rounded-2xl border border-border/60 shadow-lg"
+                  />
+                )
+              ) : (
+                <div className="py-20 px-8 text-center space-y-2">
+                  <FileText className="w-10 h-10 text-text-tan/60 mx-auto" />
+                  <p className="text-sm font-bold text-foreground">No Resume Document Uploaded Yet</p>
+                  <p className="text-xs text-text-secondary font-mono">
+                    Please upload your resume in Admin → Profile.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Glass Card Footer with Download Action in the bottom right */}
+            <div className="p-3.5 sm:px-6 bg-surface/80 backdrop-blur-md border-t border-border/80 flex items-center justify-end">
+              {resumeUrl ? (
+                <a
+                  href={resumeUrl}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2 rounded-xl bg-btn-bg hover:bg-btn-hover text-btn-text text-xs font-bold transition-all flex items-center gap-2 shadow-md hover:scale-105 active:scale-95"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download</span>
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="px-5 py-2 rounded-xl bg-surface border border-border text-text-secondary text-xs font-bold opacity-60 cursor-not-allowed flex items-center gap-2"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

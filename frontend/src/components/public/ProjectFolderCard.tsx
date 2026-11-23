@@ -44,10 +44,6 @@ function getProjectSubtitle(project: Project): string {
   }
 
   // Fallback to first few words of summary
-  return project.summary.slice(0, 30).toLowerCase();
-}
-
-  // Or extract clean first 4-5 words of summary without slicing mid-word
   const words = project.summary.replace(/^(developed|built|created|engineered|designed)\s+(a\s+)?/i, "").split(/\s+/);
   return words.slice(0, 4).join(" ").toLowerCase();
 }
