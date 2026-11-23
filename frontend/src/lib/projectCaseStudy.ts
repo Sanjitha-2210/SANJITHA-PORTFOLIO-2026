@@ -37,6 +37,7 @@ export interface ProjectSections {
   challenges: string;
   challengeItems?: ChallengeItem[];
   outcomes: string;
+  futureScope?: string;
 }
 
 export interface ProjectCaseStudyData {
@@ -218,7 +219,22 @@ export function parseDescriptionIntoSections(desc: string = ""): ProjectSections
   const contributions = extractSection(desc, /#{1,3}\s+(?:My Contributions|Contributions|Engineering Ownership|Role)[\r\n]+/i) || "";
   const challenges = extractSection(desc, /#{1,3}\s+(?:Challenges|Key Challenges|Technical Hurdles)[\r\n]+/i) || "";
   const challengeItems = parseChallengesFromText(challenges);
-  const outcomes = extractSection(desc, /#{1,3}\s+(?:Outcomes|Outcomes & Future Scope|Impact & Future Scope|Results)[\r\n]+/i) || "";
+  
+  let outcomes = extractSection(desc, /#{1,3}\s+(?:Outcomes|Measurable Outcomes|Production Impact|Results)[\r\n]+/i) || "";
+  let futureScope = extractSection(desc, /#{1,3}\s+(?:Future Scope|Future Roadmap|Roadmap|Expansion)[\r\n]+/i) || "";
+
+  // If stored under legacy unified heading "Outcomes & Future Scope", split them cleanly
+  if (!outcomes && !futureScope) {
+    const combinedOutcomes = extractSection(desc, /#{1,3}\s+(?:Outcomes & Future Scope|Impact & Future Scope)[\r\n]+/i) || "";
+    if (combinedOutcomes) {
+      const futureSplit = combinedOutcomes.split(/(?:###|\*\*|#{1,3})\s*(?:Future Scope|Future Roadmap|Roadmap)[\s\S]*/i);
+      outcomes = futureSplit[0]?.trim() || combinedOutcomes;
+      const futureMatch = combinedOutcomes.match(/(?:###|\*\*|#{1,3})\s*(?:Future Scope|Future Roadmap|Roadmap)[:.]?\s*([\s\S]*)$/i);
+      if (futureMatch && futureMatch[1]) {
+        futureScope = futureMatch[1].trim();
+      }
+    }
+  }
 
   return {
     year,
@@ -234,6 +250,7 @@ export function parseDescriptionIntoSections(desc: string = ""): ProjectSections
     challenges,
     challengeItems,
     outcomes,
+    futureScope,
   };
 }
 
@@ -400,7 +417,10 @@ export function assembleSectionsIntoDescription(sections: ProjectSections): stri
     parts.push(`## Challenges\n${sections.challenges.trim()}`);
   }
   if (sections.outcomes.trim()) {
-    parts.push(`## Outcomes & Future Scope\n${sections.outcomes.trim()}`);
+    parts.push(`## Measurable Outcomes\n${sections.outcomes.trim()}`);
+  }
+  if (sections.futureScope && sections.futureScope.trim()) {
+    parts.push(`## Future Scope\n${sections.futureScope.trim()}`);
   }
 
   return parts.join("\n\n");
@@ -551,7 +571,26 @@ export function parseProjectCaseStudy(project: Project): ProjectCaseStudyData {
   }
 
   // 10. Outcomes & Future Scope
-  const rawOutcomes = extractSection(desc, /#{1,3}\s+(?:Outcomes|Outcomes & Future Scope|Impact & Future Scope|Results)[\r\n]+/i);
+  const rawOutcomes = parsedSections.outcomes;
+  const rawFutureScope = parsedSections.futureScope;
+
+  let futureScopeItems: string[] = [];
+  if (rawFutureScope && rawFutureScope.trim()) {
+    futureScopeItems = rawFutureScope
+      .split("\n")
+      .map((l) => l.trim().replace(/^[-*]\s*|\d+\.\s*/, "").replace(/\*\*/g, ""))
+      .filter((l) => l.length > 2);
+  }
+
+  if (futureScopeItems.length === 0) {
+    futureScopeItems = [
+      "Native edge execution support for geo-distributed deployments.",
+      "Fine-tuned domain-specific AI models for automated anomaly detection.",
+      "Multi-tenant isolation enhancements with fine-grained RBAC policies.",
+      "Public SDK releases in Go, Rust, and TypeScript."
+    ];
+  }
+
   const outcomes = {
     metrics: [
       { value: "42%", label: "Throughput / Efficiency Gain" },
@@ -562,12 +601,7 @@ export function parseProjectCaseStudy(project: Project): ProjectCaseStudyData {
     summary:
       rawOutcomes ||
       `Successfully deployed to staging and production environments, demonstrably reducing infrastructure overhead while accelerating developer velocity and delivering a reliable user experience.`,
-    futureScope: [
-      "Native edge execution support for geo-distributed deployments.",
-      "Fine-tuned domain-specific AI models for automated anomaly detection.",
-      "Multi-tenant isolation enhancements with fine-grained RBAC policies.",
-      "Public SDK releases in Go, Rust, and TypeScript."
-    ]
+    futureScope: futureScopeItems
   };
 
   return {

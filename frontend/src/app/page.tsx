@@ -17,7 +17,9 @@ import TheoryToPracticeBridge from "@/components/public/TheoryToPracticeBridge";
 import SkillsSection from "@/components/public/SkillsSection";
 import SkillsToProjectsSeparator from "@/components/public/SkillsToProjectsSeparator";
 import ProjectsSection from "@/components/public/ProjectsSection";
+import ProjectsToExperienceSeparator from "@/components/public/ProjectsToExperienceSeparator";
 import ExperienceSection from "@/components/public/ExperienceSection";
+import ExperienceToCertificationsSeparator from "@/components/public/ExperienceToCertificationsSeparator";
 import CertificationsSection from "@/components/public/CertificationsSection";
 import ContactSection from "@/components/public/ContactSection";
 import TerminalHUD from "@/components/public/TerminalHUD";
@@ -406,7 +408,9 @@ export default function PublicHomePage() {
         <SkillsSection skills={skills} />
         <SkillsToProjectsSeparator />
         <ProjectsSection projects={projects} />
+        <ProjectsToExperienceSeparator />
         <ExperienceSection experience={experience} />
+        <ExperienceToCertificationsSeparator />
         <CertificationsSection certifications={certifications} />
         <ContactSection />
       </main>

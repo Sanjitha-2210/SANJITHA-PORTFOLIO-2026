@@ -20,7 +20,7 @@ import {
 import { 
   Plus, Edit, Trash2, Search, X, AlertCircle, Sparkles, 
   Eye, ExternalLink, LayoutGrid, List, Star, 
-  AlertTriangle, Lightbulb, CheckCircle2, Boxes, FileCode, Flame, TrendingUp, ImageIcon, Video,
+  AlertTriangle, Lightbulb, CheckCircle2, Boxes, FileCode, Flame, TrendingUp, Compass, ImageIcon, Video,
   Calendar, Briefcase, Users
 } from "lucide-react";
 
@@ -69,6 +69,7 @@ export default function AdminProjectsPage() {
     contributions: "",
     challenges: "",
     outcomes: "",
+    futureScope: "",
   });
 
   const [saving, setSaving] = useState(false);
@@ -222,7 +223,8 @@ export default function AdminProjectsPage() {
           resolution: "Implemented Celery workers with Redis to execute time-consuming operations asynchronously."
         }
       ],
-      outcomes: "- Slashed production cloud infrastructure expenditures by 42%.\n- Maintained 99.99% service uptime during synthetic 10x traffic spikes.\n- Future Scope: Multi-cloud federation across AWS, GCP, and bare-metal nodes.",
+      outcomes: "- Slashed production cloud infrastructure expenditures by 42%.\n- Maintained 99.99% service uptime during synthetic 10x traffic spikes.",
+      futureScope: "- Multi-cloud federation across AWS, GCP, and bare-metal nodes.\n- AI-driven predictive anomaly detection and auto-remediation.",
     });
 
     setError(null);
@@ -243,6 +245,7 @@ export default function AdminProjectsPage() {
       teamRole: parsed.teamRole || "Team",
       architecturePhases: parsed.architecturePhases || [],
       challengeItems: parsed.challengeItems || [],
+      futureScope: parsed.futureScope || "",
     });
 
     setError(null);
@@ -1207,21 +1210,39 @@ export default function AdminProjectsPage() {
                   </div>
                 </div>
 
-                {/* BOX 7: OUTCOMES */}
+                {/* BOX 7: MEASURABLE OUTCOMES / PRODUCTION IMPACT */}
                 <div className="p-5 rounded-2xl bg-surface border border-border space-y-2 shadow-sm">
                   <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs uppercase font-bold">
                     <TrendingUp className="w-4 h-4" />
-                    <span>+ Measurable Outcomes & Future Scope Box</span>
+                    <span>+ Measurable Outcomes & Production Impact Box</span>
                   </div>
                   <p className="text-[11px] text-text-secondary">
-                    Include measurable production impact (metrics, SLA, throughput) and future planned roadmap expansions.
+                    Enter key quantifiable outcomes, metric improvements, performance benchmarks, and practical achievements (one item per line or paragraph).
                   </p>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={caseSections.outcomes}
                     onChange={(e) => setCaseSections({ ...caseSections, outcomes: e.target.value })}
-                    placeholder="- Slashed production cloud infrastructure expenditures by 42%.&#10;- Maintained 99.99% service uptime during synthetic 10x traffic spikes.&#10;- Future Scope: Multi-cloud federation across AWS, GCP, and bare-metal nodes."
-                    className="w-full px-3 py-2.5 rounded-xl bg-surface-card border border-border text-foreground focus:outline-none focus:border-text-tan shadow-sm font-mono leading-relaxed"
+                    placeholder="Developed a centralized platform for campus placement activities.&#10;Organized student, company, and recruitment information.&#10;Simplified job eligibility verification workflows."
+                    className="w-full px-3 py-2.5 rounded-xl bg-surface-card border border-border text-foreground focus:outline-none focus:border-text-tan shadow-sm font-mono text-xs leading-relaxed"
+                  />
+                </div>
+
+                {/* BOX 8: FUTURE SCOPE / ROADMAP & EXPANSION */}
+                <div className="p-5 rounded-2xl bg-surface border border-border space-y-2 shadow-sm">
+                  <div className="flex items-center gap-2 text-text-tan font-mono text-xs uppercase font-bold">
+                    <Compass className="w-4 h-4" />
+                    <span>+ Future Scope & Roadmap Expansion Box</span>
+                  </div>
+                  <p className="text-[11px] text-text-secondary">
+                    Enter future roadmap milestones, expansion plans, and planned capabilities. Each line will automatically become an interactive bullet card in the public case study.
+                  </p>
+                  <textarea
+                    rows={4}
+                    value={caseSections.futureScope || ""}
+                    onChange={(e) => setCaseSections({ ...caseSections, futureScope: e.target.value })}
+                    placeholder="AI-powered job recommendations based on student profiles and skills.&#10;Automated resume parsing and candidate profiling.&#10;Intelligent placement analytics and predictive insights."
+                    className="w-full px-3 py-2.5 rounded-xl bg-surface-card border border-border text-foreground focus:outline-none focus:border-text-tan shadow-sm font-mono text-xs leading-relaxed"
                   />
                 </div>
               </div>

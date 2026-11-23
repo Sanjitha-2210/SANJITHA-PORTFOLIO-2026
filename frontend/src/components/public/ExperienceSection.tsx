@@ -13,13 +13,13 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
       <div className="mb-12">
         <div className="flex items-center gap-2 text-text-tan font-mono text-xs tracking-wider uppercase mb-2">
           <Briefcase className="w-3.5 h-3.5" />
-          <span>Track Record</span>
+          <span>CHAPTERS OF EXPERIENCE</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-          Career Milestones & Roles
+          Internship Journey
         </h2>
         <p className="text-sm text-text-secondary mt-2 max-w-xl">
-          Detailed history of high-velocity engineering, generative AI innovations, and production deployments.
+          Every opportunity bringing new skills, challenges, and perspectives.
         </p>
       </div>
 
