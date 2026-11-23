@@ -162,13 +162,13 @@ export default function ProfileCard({ profile, className = "" }: ProfileCardProp
           Quick highlights
         </h3>
         <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-2 text-left">
-          {/* 500+ Problems solved -> LeetCode */}
+          {/* 500+ Problems solved -> CodeChef */}
           <a
-            href={profile?.leetcode || "https://leetcode.com"}
+            href={profile?.codechef || "https://www.codechef.com/users/kpr24am047"}
             target="_blank"
             rel="noopener noreferrer"
             className="group/stat block space-y-0.5 p-1.5 sm:p-2 rounded-xl border border-transparent hover:border-[rgba(237,232,220,0.2)] dark:hover:border-[#D6CFBF] hover:bg-[rgba(237,232,220,0.06)] dark:hover:bg-[#EAE4D7]/60 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
-            title="View LeetCode Profile"
+            title="View CodeChef Profile"
           >
             <div className="text-xl sm:text-2xl font-extrabold text-[#D4B07C] dark:text-[#7A5C30] tracking-tight flex items-center gap-0.5">
               <span>{problemsCount}+</span>

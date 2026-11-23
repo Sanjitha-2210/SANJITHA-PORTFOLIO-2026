@@ -20,8 +20,26 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
   // Resume modal preview state
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-  const resumeUrl = profile?.resume_url;
-  const isPdf = Boolean(resumeUrl && /\.pdf(\?.*)?$/i.test(resumeUrl));
+  const rawResumeUrl = profile?.resume_url;
+  // If the resume is uploaded to Cloudinary as a PDF, Cloudinary blocks raw PDF delivery by default (401 ACL failure).
+  // Converting .pdf to .jpg (or .png) renders the high-res first page of the resume crystal-clear as an image!
+  const resumePreviewUrl = rawResumeUrl
+    ? rawResumeUrl.includes("res.cloudinary.com") && /\.pdf(\?.*)?$/i.test(rawResumeUrl)
+      ? rawResumeUrl.replace(/\.pdf(\?.*)?$/i, ".jpg")
+      : rawResumeUrl
+    : "";
+
+  const resumeDownloadUrl = rawResumeUrl
+    ? rawResumeUrl.includes("res.cloudinary.com") && /\.pdf(\?.*)?$/i.test(rawResumeUrl)
+      ? rawResumeUrl.replace("/upload/", "/upload/fl_attachment:Sanjitha_Resume/")
+      : rawResumeUrl
+    : "";
+
+  const isRawPdfIframe = Boolean(
+    resumePreviewUrl &&
+    /\.pdf(\?.*)?$/i.test(resumePreviewUrl) &&
+    !resumePreviewUrl.includes("res.cloudinary.com")
+  );
 
   return (
     <section className="relative pt-24 sm:pt-28 pb-8 sm:pb-12 min-h-[calc(100vh-4rem)] flex items-start px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
@@ -139,16 +157,16 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
 
             {/* Modal Body: Clean Resume Render */}
             <div className="p-3 sm:p-5 flex items-center justify-center overflow-auto max-h-[74vh]">
-              {resumeUrl ? (
-                isPdf ? (
+              {resumePreviewUrl ? (
+                isRawPdfIframe ? (
                   <iframe
-                    src={`${resumeUrl}#toolbar=0&navpanes=0`}
-                    title="Resume PDF"
+                    src={`${resumePreviewUrl}#toolbar=0&navpanes=0`}
+                    title="Resume Document"
                     className="w-[82vw] max-w-3xl h-[68vh] rounded-2xl border border-border/60 shadow-lg bg-white"
                   />
                 ) : (
                   <img
-                    src={resumeUrl}
+                    src={resumePreviewUrl}
                     alt={`${name}'s Resume`}
                     className="max-h-[72vh] w-auto h-auto max-w-full object-contain rounded-2xl border border-border/60 shadow-lg"
                   />
@@ -166,10 +184,10 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
 
             {/* Glass Card Footer with Download Action in the bottom right */}
             <div className="p-3.5 sm:px-6 bg-surface/80 backdrop-blur-md border-t border-border/80 flex items-center justify-end">
-              {resumeUrl ? (
+              {resumeDownloadUrl ? (
                 <a
-                  href={resumeUrl}
-                  download
+                  href={resumeDownloadUrl}
+                  download="Sanjitha_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-5 py-2 rounded-xl bg-btn-bg hover:bg-btn-hover text-btn-text text-xs font-bold transition-all flex items-center gap-2 shadow-md hover:scale-105 active:scale-95"
