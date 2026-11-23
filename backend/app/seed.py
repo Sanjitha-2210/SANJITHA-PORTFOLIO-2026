@@ -37,10 +37,8 @@ def seed_database(db: Session):
         db.commit()
         print("✓ Created default profile")
 
-    # 3. Projects
-    if db.query(Project).count() == 0:
-        projects = [
-        projects = [
+    # 3. Projects: Ensure all core portfolio projects exist in database
+    projects = [
             Project(
                 title="Smart Tourist Safety System — TourEzy",
                 slug="smart-tourist-safety-system-tourezy",
@@ -116,10 +114,13 @@ def seed_database(db: Session):
                 status="published",
                 order_index=5
             )
-        ]
-        db.add_all(projects)
-        db.commit()
-        print(f"✓ Seeded {len(projects)} projects (including draft)")
+    ]
+    for p_seed in projects:
+        existing = db.query(Project).filter(Project.slug == p_seed.slug).first()
+        if not existing:
+            db.add(p_seed)
+    db.commit()
+    print(f"✓ Ensured {len(projects)} core projects exist in database")
 
     # 4. Skills (Tech Radar with Core, Proficient, Exploring Tiers - 23 Focused Stack)
     if db.query(Skill).count() == 0:
