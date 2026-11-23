@@ -19,6 +19,7 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
 
   // Resume modal preview state
   const [isResumeOpen, setIsResumeOpen] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   const rawResumeUrl = profile?.resume_url;
   // If the resume is uploaded to Cloudinary as a PDF, generate URLs for all pages (e.g. page 1 and page 2)
@@ -33,11 +34,65 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
     ? [rawResumeUrl]
     : [];
 
-  const resumeDownloadUrl = rawResumeUrl
-    ? rawResumeUrl.includes("res.cloudinary.com") && /\.pdf(\?.*)?$/i.test(rawResumeUrl)
-      ? rawResumeUrl.replace("/upload/", "/upload/fl_attachment:Sanjitha_Resume/")
-      : rawResumeUrl
-    : "";
+  const handleDownloadResume = async () => {
+    if (!rawResumeUrl) return;
+
+    // If it's an external direct PDF that is not Cloudinary-restricted, open/download directly
+    if (!isCloudinaryPdf) {
+      window.open(rawResumeUrl, "_blank");
+      return;
+    }
+
+    setDownloading(true);
+
+    try {
+      // Create a clean printable popup document containing high-res page 1 & page 2
+      // This allows the user to immediately "Save as PDF" / Download in 1 click cleanly!
+      const printWindow = window.open("", "_blank");
+      if (printWindow) {
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>${name} — Resume</title>
+              <style>
+                @page { size: A4; margin: 0; }
+                body { margin: 0; padding: 0; background: #fff; font-family: sans-serif; }
+                .page { width: 100%; max-width: 820px; margin: 0 auto 20px auto; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+                img { width: 100%; height: auto; display: block; }
+                @media print {
+                  .page { margin: 0; box-shadow: none; page-break-after: always; }
+                  .page:last-child { page-break-after: auto; }
+                  .no-print { display: none !important; }
+                }
+                .bar { position: fixed; bottom: 20px; right: 20px; background: #163323; color: #EDE8DC; padding: 12px 24px; border-radius: 50px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); cursor: pointer; border: none; z-index: 1000; display: flex; align-items: center; gap: 8px; }
+              </style>
+            </head>
+            <body>
+              <button class="bar no-print" onclick="window.print()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Save as PDF / Print
+              </button>
+              ${resumePages.map((pg, idx) => `<div class="page"><img src="${pg}" alt="Page ${idx + 1}" /></div>`).join("")}
+              <script>
+                window.onload = function() {
+                  setTimeout(function() {
+                    window.print();
+                  }, 600);
+                };
+              </script>
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+      }
+    } catch {
+      // Fallback: download page 1 attachment
+      window.open(resumePages[0], "_blank");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const isRawPdfIframe = Boolean(
     !isCloudinaryPdf &&
@@ -198,17 +253,16 @@ export default function Hero({ profile, onOpenTerminal }: HeroProps) {
 
             {/* Glass Card Footer with Download Action in the bottom right */}
             <div className="p-3.5 sm:px-6 bg-surface/80 backdrop-blur-md border-t border-border/80 flex items-center justify-end">
-              {resumeDownloadUrl ? (
-                <a
-                  href={resumeDownloadUrl}
-                  download="Sanjitha_Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-2 rounded-xl bg-btn-bg hover:bg-btn-hover text-btn-text text-xs font-bold transition-all flex items-center gap-2 shadow-md hover:scale-105 active:scale-95"
+              {rawResumeUrl ? (
+                <button
+                  type="button"
+                  onClick={handleDownloadResume}
+                  disabled={downloading}
+                  className="px-5 py-2 rounded-xl bg-btn-bg hover:bg-btn-hover text-btn-text text-xs font-bold transition-all flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Download</span>
-                </a>
+                  <span>{downloading ? "Preparing..." : "Download"}</span>
+                </button>
               ) : (
                 <button
                   type="button"
