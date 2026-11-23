@@ -29,8 +29,8 @@ def seed_database(db: Session):
             linkedin="https://linkedin.com",
             twitter="https://x.com",
             website="https://sanjitha.dev",
-            avatar_url="/sanjitha-portrait.png",
-            resume_url="https://example.com/resume.pdf",
+            avatar_url="https://res.cloudinary.com/glpoxplc/image/upload/v1794729920/portfolio_cms/paclbowwbdjsisgvzeqt.jpg",
+            resume_url="https://res.cloudinary.com/glpoxplc/image/upload/v1795459300/portfolio_cms/bjmpzwmjos8zad5j14nj.pdf",
             open_to_work=True
         )
         db.add(profile)
