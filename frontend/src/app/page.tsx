@@ -7,6 +7,7 @@ import {
   getPublicExperience, getPublicCertifications, getPublicEducation,
   getPublicMilestones
 } from "@/lib/api";
+import { defaultCertifications } from "@/lib/defaultData";
 
 import AmbientAurora from "@/components/public/AmbientAurora";
 import SpotlightCursor from "@/components/public/SpotlightCursor";
@@ -451,70 +452,7 @@ const defaultExperience: Experience[] = [
   }
 ];
 
-const defaultCertifications: Certification[] = [
-  {
-    id: 1,
-    title: "VYUHA TECH 2.0 — National Level Hackathon",
-    issuer: "CMR Institute of Technology • 2025",
-    issue_date: "2025",
-    credential_id: "VYUHA-2025-081",
-    certificate_image: "/certificates/cert-vyuha-tech.jpg",
-    category: "Events & Participation",
-    description: "Participated in the 24-Hour National Level Hackathon VYUHA TECH 2.0 conducted by CMR Institute of Technology. Collaborated with a competitive engineering team in developing innovative tech solutions solving real-world challenges.",
-    status: "published",
-    order_index: 1
-  },
-  {
-    id: 2,
-    title: "AWS Fundamentals for Cloud Practitioners",
-    issuer: "Nminds Academy, Erode • August 2025",
-    issue_date: "August 2025",
-    credential_id: "10699282",
-    certificate_image: "/certificates/cert-aws-fundamentals.jpg",
-    category: "Professional Learning & Certifications",
-    description: "Successfully completed a One Credit Course on AWS Cloud Fundamentals with practical training in core cloud services and real-time application deployment. Gained hands-on experience with AWS EC2, Route 53, and Elastic Load Balancer, along with deploying a web server in a live cloud environment.\n\nThis training strengthened my understanding of cloud infrastructure, scalability, load balancing, and basic cloud security concepts.",
-    status: "published",
-    order_index: 2
-  },
-  {
-    id: 3,
-    title: "Certificate of Appreciation — Third Topper",
-    issuer: "KPR Institute of Engineering and Technology • 2025",
-    issue_date: "2025",
-    credential_id: "KPR-TOP03-2025",
-    certificate_image: "/certificates/cert-appreciation-topper.jpg",
-    category: "Leadership & Professional Development",
-    description: "Awarded Certificate of Appreciation as Third Topper during the Even Semester of the Academic Year in recognition of sincere academic efforts, dedicated service, commitment, and active leadership in engineering studies.",
-    status: "published",
-    order_index: 3
-  },
-  {
-    id: 4,
-    title: "SOLSTICE - 2024 — Math Innovations Workshop",
-    issuer: "SRMV College of Arts and Science • September 2024",
-    issue_date: "September 2024",
-    credential_id: "SOLSTICE-2024",
-    certificate_image: "/certificates/cert-solstice-2024.jpg",
-    category: "Events & Participation",
-    description: `Certificate of Participation for the one day workshop on 'Innovations in Learning Mathematics' - SOLSTICE - 2024 held on 24-09-2024.
 
-Event: SOLSTICE - 2024
-Topic: Innovations in Learning Mathematics
-Date: 24 September 2024
-Venue: Sri Ramakrishna Mission Vidyalaya College of Arts and Science, Coimbatore-641 020
-Department: Department of Mathematics
-Affiliated to: Bharathiar University
-
-Authorized by:
-Dr. A.K. Abdul Hakeem - Co-ordinator
-Dr. K. Kanagarajan - HoD
-Dr. A. Muthusamy - Principal
-
-Key Skills: Mathematical Innovation, Learning Methodologies, Workshop Participation, Intercollegiate Meet`,
-    status: "published",
-    order_index: 4
-  }
-];
 
 const defaultEducation: Education[] = [
   {

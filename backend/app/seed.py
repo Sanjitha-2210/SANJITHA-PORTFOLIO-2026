@@ -205,46 +205,261 @@ def seed_database(db: Session):
         db.commit()
         print(f"✓ Seeded {len(experiences)} experience entries")
 
-    # 6. Certifications
-    if db.query(Certification).count() == 0:
-        certs = [
+    # 6. Certifications: Ensure all 11 real certifications exist
+    certs = [
             Certification(
-                title="AWS Certified Solutions Architect – Professional",
-                issuer="Amazon Web Services",
-                issue_date="Nov 2024",
-                expiry_date="Nov 2027",
-                credential_id="AWS-PSA-994821",
-                credential_url="https://aws.amazon.com/verification",
-                certificate_image="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80",
+                title="Java Problem Solving — CodeChef Certification",
+                issuer="CodeChef • 4 August 2026",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795361292/portfolio_cms/ijx3hnjbjl1cv53m0jrf.jpg",
                 status="published",
-                order_index=1
+                order_index=1,
+                description="Successfully completed all lessons and projects in the Java Problem Solving track offered by CodeChef, strengthening programming logic, analytical thinking, and problem-solving abilities through Java-based exercises.
+
+Certificate ID: 9ca02ac
+Platform: CodeChef
+Category: Technical & Programming
+Username: kpr24am047
+Key Skills Gained: Java Programming, Problem Solving, Logical Thinking, Algorithmic Thinking.",
+                duration="",
+                skills="",
+                category="Professional Learning & Certifications"
             ),
             Certification(
-                title="Google Cloud Certified Professional Cloud Architect",
-                issuer="Google Cloud",
-                issue_date="Aug 2024",
-                expiry_date="Aug 2026",
-                credential_id="GCP-PCA-731940",
-                credential_url="https://cloud.google.com/certification",
-                certificate_image="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",
+                title="DEXATHON 2026 — Certificate of Appreciation",
+                issuer="Sathyabama Institute of Science and Technology, Chennai • 2026",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795359165/portfolio_cms/n5h7jj49kcvi66ui2g90.jpg",
                 status="published",
-                order_index=2
+                order_index=5,
+                description="Recognized for outstanding performance and achievement in Round 2 of Dexathon 2026, organized by the Department of Computer Applications & Computer Science at Sathyabama Institute of Science and Technology, Chennai.
+
+Certificate Type: Certificate of Appreciation
+Event: Dexathon 2026
+Achievement: Qualified / Recognized in Round 2
+Organizer: Department of Computer Applications & Computer Science
+Institution: Sathyabama Institute of Science and Technology
+Location: Chennai, Tamil Nadu",
+                duration="",
+                skills="",
+                category="Events & Participation"
             ),
             Certification(
-                title="Certified Kubernetes Administrator (CKA)",
-                issuer="Linux Foundation & CNCF",
-                issue_date="Jan 2024",
-                expiry_date="Jan 2027",
-                credential_id="CKA-240182",
-                credential_url="https://www.cncf.io/certification/cka",
-                certificate_image="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&auto=format&fit=crop&q=80",
+                title="C++ Training — Certification",
+                issuer="Spoken Tutorial Project, IIT Bombay • December 2024",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795359300/portfolio_cms/dxfsyx0jqfcnbhcbjilz.jpg",
                 status="published",
-                order_index=3
+                order_index=6,
+                description="Certificate for the Completion of Cpp Training organized at KPR Institute of Engineering and Technology by Pandiya Rajan G with course material provided by the Spoken Tutorial Project, IIT Bombay.
+
+Passing an online exam, conducted remotely from IIT Bombay, is a pre-requisite for completing this training.
+
+PANDIYA RAJAN G from KPR Institute of Engineering and Technology invigilated this examination.
+This training is offered by the Spoken Tutorial Project, IIT Bombay.
+
+Credits: 2
+Score: 42.50%
+Date: 27 December 2024
+Certificate ID: 4087059A47
+
+Key Skills: C++ Programming, Object-Oriented Programming, Online Examination, Academic Achievement",
+                duration="",
+                skills="",
+                category="Professional Learning & Certifications"
+            ),
+            Certification(
+                title="Python 3.4.3 Training — Certification",
+                issuer="EduPyramids, SINE, IIT Bombay • May 2025",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795359426/portfolio_cms/m3yp4uxmlmjmj2qti4vh.jpg",
+                status="published",
+                order_index=6,
+                description="Certificate for the Completion of Python 3.4.3 Training organized at KPR Institute of Engineering and Technology by Mr.Pandiya Rajan G with course material provided by EduPyramids, SINE, IIT Bombay.
+
+Passing an online exam, conducted remotely from IIT Bombay, is a pre-requisite for completing this training.
+
+Examination invigilated by: NANDHAGOPAL S from KPR Institute of Engineering and Technology
+Credits: 4
+Score: 50.00%
+Date: 05 May 2025
+Certificate ID: 4087059MJJ
+Key Skills: Python Programming, Online Examination, Academic Achievement",
+                duration="",
+                skills="",
+                category="Professional Learning & Certifications"
+            ),
+            Certification(
+                title="VYUHA TECH 2.0 — National Level Hackathon",
+                issuer="CMR Institute of Technology • 2025",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795358631/portfolio_cms/n6gaydjtpvpi74lyskoj.jpg",
+                status="published",
+                order_index=7,
+                description="Developed an AI-based tourist safety system using Geo-Fencing for real-time location tracking, unsafe-zone detection, and instant emergency alerts. Built as part of a 24-hour national level hackathon, focusing on public safety and smart surveillance solutions.
+
+Certificate ID: V25CMRIT02
+Duration: 24 Hours (8th – 9th October 2025)
+Role: Team Member —Developer
+Technologies Used: AI, Geo-Fencing, Real-Time Monitoring
+Key Skills Gained: Problem Solving, Team Collaboration, Innovation, Rapid Prototyping",
+                duration="",
+                skills="",
+                category="Events & Participation"
+            ),
+            Certification(
+                title="Advanced C++ Training — Certification",
+                issuer="EduPyramids, SINE, IIT Bombay • May 2025",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795359345/portfolio_cms/csj0skeytkehpvernqtm.jpg",
+                status="published",
+                order_index=7,
+                description="Certificate for the Completion of Advanced C++ Training organized at KPR Institute of Engineering and Technology by Pandiya Rajan G with course material provided by EduPyramids, SINE, IIT Bombay.
+
+Passing an online exam, conducted remotely from IIT Bombay, is a pre-requisite for completing this training.
+
+Examination invigilated by: KOTHAI GANESAN from KPR Institute of Engineering and Technology
+Credits: 1
+Score: 65.00%
+Date: 05 May 2025
+Certificate ID: 40870590YM
+
+Key Skills: Advanced C++, Object-Oriented Programming, Online Examination, Academic Achievement",
+                duration="",
+                skills="",
+                category="Professional Learning & Certifications"
+            ),
+            Certification(
+                title="CodHer'25 — Women in Coding Challenge",
+                issuer="ACM-CEG, Anna University, Chennai • 2025",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795358526/portfolio_cms/uu2dvghs6jmcswktixnp.jpg",
+                status="published",
+                order_index=8,
+                description="Certificate of Participation for CodHer'25 — Women in Coding Challenge. Built an AI-based voice cloning and multilingual dubbing system using Python, focused on speech recognition, translation, and natural-sounding voice generation.
+
+Duration: 05–06 April 2025
+Event: CodHer'25 — Women in Coding Challenge
+Platform: Unstop
+Technologies Used: Python, AI, Speech Processing
+Key Skills Gained: Problem Solving, Competitive Coding, Teamwork, AI Application Development",
+                duration="",
+                skills="",
+                category="Events & Participation"
+            ),
+            Certification(
+                title="H2-(Hostel Hackathon) — Certificate of Participation",
+                issuer="Hostels Aura Club, KPR Institute • May 2025",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795358447/portfolio_cms/ynr97rc8sk9iujjndzhh.jpg",
+                status="published",
+                order_index=9,
+                description="",
+                duration="",
+                skills="",
+                category="Events & Participation"
+            ),
+            Certification(
+                title="SOLSTICE - 2024 — Math Innovations Workshop",
+                issuer="SRMV College of Arts and Science, Department of Mathematics • September 2024",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795356018/portfolio_cms/xsqmc7k64ob8xeljaylu.jpg",
+                status="published",
+                order_index=10,
+                description="Certificate of Participation for the one day workshop on 'Innovations in Learning Mathematics' - SOLSTICE - 2024 held on 24-09-2024.
+
+Event: SOLSTICE - 2024
+Topic: Innovations in Learning Mathematics
+Date: 24 September 2024
+Venue: Sri Ramakrishna Mission Vidyalaya College of Arts and Science, Coimbatore-641 020
+Department: Department of Mathematics
+Affiliated to: Bharathiar University
+Authorized by:
+Dr. A.K. Abdul Hakeem - Co-ordinator
+Dr. K. Kanagarajan - HoD
+Dr. A. Muthusamy - Principal
+
+Key Skills: Mathematical Innovation, Learning Methodologies, Workshop Participation, Intercollegiate Meet",
+                duration="",
+                skills="",
+                category="Events & Participation"
+            ),
+            Certification(
+                title="Learn Java — CodeChef Certification",
+                issuer="CodeChef • 4 August 2026",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795361413/portfolio_cms/ixtufblwwlu76fiqeh8w.jpg",
+                status="published",
+                order_index=10,
+                description="Successfully completed all lessons and projects in the Learn Java track offered by CodeChef, developing foundational Java programming knowledge and practical coding skills.
+
+Certificate ID: 9dc72d1
+Platform: CodeChef
+Category: Technical & Programming
+Username: kpr24am047
+Key Skills Gained: Java Fundamentals, Programming Concepts, Coding Skills, Logical Thinking.",
+                duration="",
+                skills="",
+                category="Professional Learning & Certifications"
+            ),
+            Certification(
+                title="Practice Java — CodeChef Certification",
+                issuer="CodeChef • 1 August 2026",
+                issue_date="2024",
+                expiry_date="",
+                credential_id="",
+                credential_url="",
+                certificate_image="https://res.cloudinary.com/glpoxplc/image/upload/v1795361510/portfolio_cms/vepyvw2kxfuw66clm85l.jpg",
+                status="published",
+                order_index=11,
+                description="Successfully completed all practice problems in the Practice Java track offered by CodeChef, improving coding proficiency, logical reasoning, and practical problem-solving skills through hands-on Java exercises.
+
+Certificate ID: 34e9b28
+Platform: CodeChef
+Category: Technical & Programming
+Username: kpr24am047
+Key Skills Gained: Java Programming, Coding Practice, Problem Solving, Logical Reasoning.",
+                duration="",
+                skills="",
+                category="Professional Learning & Certifications"
             )
-        ]
-        db.add_all(certs)
-        db.commit()
-        print(f"✓ Seeded {len(certs)} certifications")
+    ]
+    for c_seed in certs:
+        existing = db.query(Certification).filter(Certification.title == c_seed.title).first()
+        if not existing:
+            db.add(c_seed)
+    db.commit()
+    print(f"✓ Ensured {len(certs)} certifications exist in database")
 
     # 7. Education
     if db.query(Education).count() == 0:

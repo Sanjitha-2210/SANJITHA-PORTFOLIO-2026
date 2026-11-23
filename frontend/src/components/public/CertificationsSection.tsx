@@ -32,8 +32,8 @@ export default function CertificationsSection({ certifications }: Certifications
     ? sortedCerts
     : sortedCerts.filter((c) => (c.category || "Professional Learning & Certifications") === selectedCategory);
 
-  // Display top 3 certificates on the home showcase
-  const displayedCerts = filteredCerts.slice(0, 3);
+  // Display all matching certificates so all verified credentials are visible
+  const displayedCerts = filteredCerts;
 
   return (
     <section id="certifications" className="py-20 sm:py-24 px-4 max-w-7xl mx-auto relative scroll-mt-20">
@@ -107,7 +107,7 @@ export default function CertificationsSection({ certifications }: Certifications
           <p className="text-xs text-text-secondary font-mono mt-1">Select another category or view all certificates.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {displayedCerts.map((cert) => (
             <div
               key={cert.id}

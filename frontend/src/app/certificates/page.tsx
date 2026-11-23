@@ -9,10 +9,11 @@ import AmbientAurora from "@/components/public/AmbientAurora";
 import SpotlightCursor from "@/components/public/SpotlightCursor";
 import { CERTIFICATE_CATEGORIES } from "@/components/public/CertificationsSection";
 import { sortCertificatesByDate } from "@/lib/utils";
+import { defaultCertifications } from "@/lib/defaultData";
 
 export default function AllCertificatesPage() {
-  const [certifications, setCertifications] = useState<Certification[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [certifications, setCertifications] = useState<Certification[]>(defaultCertifications);
+  const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [previewCert, setPreviewCert] = useState<Certification | null>(null);
@@ -24,7 +25,7 @@ export default function AllCertificatesPage() {
     const loadData = () => {
       getPublicCertifications()
         .then((data) => {
-          if (isMounted) setCertifications(data);
+          if (isMounted && data && data.length > 0) setCertifications(data);
         })
         .catch((err) => {
           console.error("Failed to load certificates", err);

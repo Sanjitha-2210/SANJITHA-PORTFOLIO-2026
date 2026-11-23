@@ -10,6 +10,7 @@ import {
 import StatusBadge from "@/components/admin/StatusBadge";
 import MediaUploader from "@/components/admin/MediaUploader";
 import { Plus, Edit, Trash2, Award, X, RotateCcw, Filter, FileText } from "lucide-react";
+import { defaultCertifications } from "@/lib/defaultData";
 
 const ADMIN_CERTIFICATE_CATEGORIES = [
   "Professional Learning & Certifications",
@@ -20,8 +21,8 @@ const ADMIN_CERTIFICATE_CATEGORIES = [
 ] as const;
 
 export default function AdminCertificationsPage() {
-  const [certifications, setCertifications] = useState<Certification[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [certifications, setCertifications] = useState<Certification[]>(defaultCertifications);
+  const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCert, setEditingCert] = useState<Certification | null>(null);
@@ -48,9 +49,11 @@ export default function AdminCertificationsPage() {
         const fallback = await getPublicCertifications().catch(() => []);
         if (fallback && fallback.length > 0) {
           data = fallback;
+        } else {
+          data = defaultCertifications;
         }
       }
-      setCertifications(data || []);
+      setCertifications(data || defaultCertifications);
     } catch (err: any) {
       console.warn("adminGetCertifications failed, attempting direct public fallback...", err);
       try {
@@ -58,10 +61,10 @@ export default function AdminCertificationsPage() {
         if (fallback && fallback.length > 0) {
           setCertifications(fallback);
         } else {
-          setLoadError(err?.message || "Failed to load certifications");
+          setCertifications(defaultCertifications);
         }
       } catch (fallbackErr: any) {
-        setLoadError(err?.message || "Failed to load certifications");
+        setCertifications(defaultCertifications);
       }
     } finally {
       setLoading(false);
