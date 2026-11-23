@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Certification } from "@/types";
 import { Award, Eye, Download, X, ArrowRight, FileText, Sparkles, Filter } from "lucide-react";
 import Link from "next/link";
+import { sortCertificatesByDate } from "@/lib/utils";
 
 interface CertificationsSectionProps {
   certifications: Certification[];
@@ -23,10 +24,13 @@ export default function CertificationsSection({ certifications }: Certifications
   const [previewCert, setPreviewCert] = useState<Certification | null>(null);
   const [detailsCert, setDetailsCert] = useState<Certification | null>(null);
 
+  // Sort chronologically: newest/most recent certificate first
+  const sortedCerts = sortCertificatesByDate(certifications);
+
   // Filter by category
   const filteredCerts = selectedCategory === "All"
-    ? certifications
-    : certifications.filter((c) => (c.category || "Professional Learning & Certifications") === selectedCategory);
+    ? sortedCerts
+    : sortedCerts.filter((c) => (c.category || "Professional Learning & Certifications") === selectedCategory);
 
   // Display top 3 certificates on the home showcase
   const displayedCerts = filteredCerts.slice(0, 3);

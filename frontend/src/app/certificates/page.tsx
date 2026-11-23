@@ -8,6 +8,7 @@ import Link from "next/link";
 import AmbientAurora from "@/components/public/AmbientAurora";
 import SpotlightCursor from "@/components/public/SpotlightCursor";
 import { CERTIFICATE_CATEGORIES } from "@/components/public/CertificationsSection";
+import { sortCertificatesByDate } from "@/lib/utils";
 
 export default function AllCertificatesPage() {
   const [certifications, setCertifications] = useState<Certification[]>([]);
@@ -67,7 +68,10 @@ export default function AllCertificatesPage() {
     };
   }, []);
 
-  const filtered = certifications.filter((cert) => {
+  // Sort chronologically: newest/most recent certificate first
+  const sortedCertifications = sortCertificatesByDate(certifications);
+
+  const filtered = sortedCertifications.filter((cert) => {
     const matchesCategory =
       selectedCategory === "All" ||
       (cert.category || "Professional Learning & Certifications") === selectedCategory;
