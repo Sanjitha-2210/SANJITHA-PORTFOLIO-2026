@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Experience } from "@/types";
 import { Briefcase, MapPin, Check, Star, ExternalLink } from "lucide-react";
 
@@ -9,16 +8,9 @@ interface ExperienceSectionProps {
 }
 
 export default function ExperienceSection({ experience }: ExperienceSectionProps) {
-  // Toggle for "...see more" / "see less" on long bullet lists (matches UI design)
-  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
-
-  const toggleExpand = (id: number) => {
-    setExpandedCards((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
   return (
-    <section id="experience" className="py-20 sm:py-24 px-4 max-w-4xl mx-auto relative scroll-mt-20">
-      {/* Section Header */}
+    <section id="experience" className="py-20 sm:py-24 px-4 max-w-7xl mx-auto relative scroll-mt-20">
+      {/* Section Header - Full width left-aligned matching rest of portfolio */}
       <div className="mb-10 sm:mb-12">
         <div className="flex items-center gap-2 text-text-tan font-mono text-xs tracking-wider uppercase mb-2 font-bold">
           <Briefcase className="w-3.5 h-3.5" />
@@ -39,12 +31,6 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
             ? item.bullet_points.split("\n").filter(Boolean)
             : [];
 
-          const isExpanded = Boolean(expandedCards[item.id]);
-          // If list is long, show first 2 by default, with "...see more" toggle matching image 3
-          const displayedBullets = isExpanded || bulletList.length <= 2 
-            ? bulletList 
-            : bulletList.slice(0, 2);
-
           // Extract company initial for badge (e.g., 'P' for PhobosQ)
           const companyInitial = item.company ? item.company.trim().charAt(0).toUpperCase() : "P";
 
@@ -61,7 +47,7 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
             skillsLine = "Python · FastAPI · Next.js · PostgreSQL · REST APIs";
           }
 
-          // Calculate duration string (e.g. "APR 2025 – OCT 2025 · 6 mos")
+          // Format duration string (e.g. "APR 2025 – OCT 2025 · 6 mos")
           const durationStr = item.start_date && item.end_date 
             ? `${item.start_date} – ${item.end_date} · 6 mos`
             : `${item.start_date || "APR 2025"} – ${item.end_date || "OCT 2025"}`;
@@ -71,7 +57,7 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
               key={item.id}
               className="rounded-3xl bg-surface-card border border-border p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden"
             >
-              {/* Top Header Row matching UI design image 3 */}
+              {/* Top Header Row matching UI design image */}
               <div className="flex items-start gap-4 sm:gap-5">
                 {/* Company Square Avatar Badge */}
                 <div 
@@ -125,10 +111,10 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
                 </div>
               </div>
 
-              {/* Middle Section: Bullet Points with Green Checkmarks */}
+              {/* Middle Section: All Bullet Points with Green Checkmarks (Full list, no truncation) */}
               {bulletList.length > 0 && (
-                <div className="mt-6 space-y-3.5 pl-1 sm:pl-2">
-                  {displayedBullets.map((bullet, idx) => {
+                <div className="mt-6 space-y-3 pl-1 sm:pl-2">
+                  {bulletList.map((bullet, idx) => {
                     const cleaned = bullet.replace(/^[•\-\*]\s*/, "");
                     const colonIdx = cleaned.indexOf(":");
                     const hasTitle = colonIdx > 0 && colonIdx < 55;
@@ -147,34 +133,10 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
                           ) : (
                             <span>{cleaned}</span>
                           )}
-
-                          {/* Show inline "...see more" on the second bullet if collapsed */}
-                          {!isExpanded && idx === 1 && bulletList.length > 2 && (
-                            <button
-                              type="button"
-                              onClick={() => toggleExpand(item.id)}
-                              className="ml-2 text-xs font-bold text-text-tan hover:underline cursor-pointer inline-flex items-center"
-                            >
-                              ...see more
-                            </button>
-                          )}
                         </div>
                       </div>
                     );
                   })}
-
-                  {/* "see less" toggle button if expanded */}
-                  {isExpanded && bulletList.length > 2 && (
-                    <div className="pt-1 pl-7">
-                      <button
-                        type="button"
-                        onClick={() => toggleExpand(item.id)}
-                        className="text-xs font-bold text-text-tan hover:underline cursor-pointer"
-                      >
-                        see less
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
 
