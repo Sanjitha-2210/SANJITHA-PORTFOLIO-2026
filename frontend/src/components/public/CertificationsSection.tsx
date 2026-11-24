@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Certification } from "@/types";
 import { Award, Eye, Download, X, ArrowRight, FileText, Sparkles, Filter } from "lucide-react";
 import Link from "next/link";
@@ -20,9 +20,39 @@ export const CERTIFICATE_CATEGORIES = [
 ] as const;
 
 export default function CertificationsSection({ certifications }: CertificationsSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [previewCert, setPreviewCert] = useState<Certification | null>(null);
   const [detailsCert, setDetailsCert] = useState<Certification | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    const currentElem = sectionRef.current;
+    if (currentElem) {
+      observer.observe(currentElem);
+    }
+
+    return () => {
+      if (currentElem) {
+        observer.unobserve(currentElem);
+      }
+      observer.disconnect();
+    };
+  }, []);
 
   // Sort chronologically: newest/most recent certificate first
   const sortedCerts = sortCertificatesByDate(certifications);
@@ -36,9 +66,17 @@ export default function CertificationsSection({ certifications }: Certifications
   const displayedCerts = filteredCerts.slice(0, 3);
 
   return (
-    <section id="certifications" className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20">
+    <section 
+      ref={sectionRef}
+      id="certifications" 
+      className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20"
+    >
       {/* Section Header with Top-Right View All Button */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-6">
+      <div 
+        className={`flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-6 transition-all duration-700 ease-out ${
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+      >
         <div>
           <div className="flex items-center gap-2 text-text-tan font-mono text-xs tracking-wider uppercase mb-2 font-bold">
             <Award className="w-4 h-4 text-text-tan" />
@@ -107,7 +145,9 @@ export default function CertificationsSection({ certifications }: Certifications
           <p className="text-xs text-text-secondary font-mono mt-1">Select another category or view all certificates.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 transition-all duration-800 delay-150 ease-out ${
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}>
           {displayedCerts.map((cert) => (
             <div
               key={cert.id}

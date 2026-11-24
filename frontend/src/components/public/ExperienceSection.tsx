@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { Experience } from "@/types";
 import { Briefcase, MapPin, Check, Star, ExternalLink } from "lucide-react";
 
@@ -8,10 +9,49 @@ interface ExperienceSectionProps {
 }
 
 export default function ExperienceSection({ experience }: ExperienceSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    const currentElem = sectionRef.current;
+    if (currentElem) {
+      observer.observe(currentElem);
+    }
+
+    return () => {
+      if (currentElem) {
+        observer.unobserve(currentElem);
+      }
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <section id="experience" className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20">
-      {/* Section Header - Full width left-aligned matching rest of portfolio */}
-      <div className="mb-10 sm:mb-12">
+    <section 
+      ref={sectionRef}
+      id="experience" 
+      className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20"
+    >
+      {/* Section Header - Full width left-aligned matching rest of portfolio with smooth scroll reveal */}
+      <div 
+        className={`mb-10 sm:mb-12 transition-all duration-700 ease-out ${
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+      >
         <div className="flex items-center gap-2 text-text-tan font-mono text-xs tracking-wider uppercase mb-2 font-bold">
           <Briefcase className="w-3.5 h-3.5" />
           <span>CHAPTERS OF EXPERIENCE</span>
@@ -24,8 +64,12 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
         </p>
       </div>
 
-      {/* Cards Container */}
-      <div className="space-y-8">
+      {/* Cards Container with Entrance Animation */}
+      <div 
+        className={`space-y-8 transition-all duration-800 delay-150 ease-out ${
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
         {experience.map((item) => {
           const bulletList = item.bullet_points
             ? item.bullet_points.split("\n").filter(Boolean)

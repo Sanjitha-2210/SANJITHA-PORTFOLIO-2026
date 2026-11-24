@@ -88,6 +88,11 @@ export default function ContactSection() {
 
       setStatus("success");
       setFormData({ firstName: "", email: "", phone: "", message: "" });
+      
+      // Auto-dismiss the success message after 3 seconds
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
     } catch (err: any) {
       setStatus("error");
       setErrorMessage(err.message || "Failed to deliver message. Please try again.");

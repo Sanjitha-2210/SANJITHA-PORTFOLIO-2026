@@ -11,8 +11,8 @@ export default function CertificationsToContactSeparator() {
       <div className="relative flex items-center justify-between gap-3 sm:gap-6">
         {/* Left Decorative Line with Gradient & Diamond Accent */}
         <div className="flex-1 relative flex items-center">
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-text-tan/60" />
-          <div className="hidden sm:block absolute right-0 w-2.5 h-2.5 rotate-45 border border-text-tan/70 bg-surface shadow-xs transition-transform duration-500 hover:rotate-90 hover:scale-125" />
+          <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#C6A06B]/70 to-[#B08D5E] dark:via-text-tan/60 dark:to-text-tan shadow-xs" />
+          <div className="absolute right-0 w-2.5 h-2.5 rotate-45 border-2 border-[#B08D5E] dark:border-text-tan bg-surface shadow-xs transition-transform duration-500 hover:rotate-90 hover:scale-125" />
         </div>
 
         {/* Center Section Pill / Divider Badge */}
@@ -46,8 +46,8 @@ export default function CertificationsToContactSeparator() {
 
         {/* Right Decorative Line with Gradient & Diamond Accent */}
         <div className="flex-1 relative flex items-center">
-          <div className="hidden sm:block absolute left-0 w-2.5 h-2.5 rotate-45 border border-text-tan/70 bg-surface shadow-xs transition-transform duration-500 hover:rotate-90 hover:scale-125" />
-          <div className="w-full h-px bg-gradient-to-l from-transparent via-border to-text-tan/60" />
+          <div className="absolute left-0 w-2.5 h-2.5 rotate-45 border-2 border-[#B08D5E] dark:border-text-tan bg-surface shadow-xs transition-transform duration-500 hover:rotate-90 hover:scale-125" />
+          <div className="w-full h-[2px] bg-gradient-to-l from-transparent via-[#C6A06B]/70 to-[#B08D5E] dark:via-text-tan/60 dark:to-text-tan shadow-xs" />
         </div>
       </div>
     </div>
