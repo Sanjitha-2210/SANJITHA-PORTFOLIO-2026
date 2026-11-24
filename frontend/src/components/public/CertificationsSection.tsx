@@ -21,7 +21,6 @@ export const CERTIFICATE_CATEGORIES = [
 
 export default function CertificationsSection({ certifications }: CertificationsSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [showAll, setShowAll] = useState(false);
   const [previewCert, setPreviewCert] = useState<Certification | null>(null);
   const [detailsCert, setDetailsCert] = useState<Certification | null>(null);
 
@@ -33,9 +32,8 @@ export default function CertificationsSection({ certifications }: Certifications
     ? sortedCerts
     : sortedCerts.filter((c) => (c.category || "Professional Learning & Certifications") === selectedCategory);
 
-  // Show only 3 certificates initially; the balance are revealed upon clicking "View All"
-  const displayedCerts = showAll ? filteredCerts : filteredCerts.slice(0, 3);
-  const hasMore = filteredCerts.length > 3;
+  // Display only top 3 certificates on the home page (just like Projects section)
+  const displayedCerts = filteredCerts.slice(0, 3);
 
   return (
     <section id="certifications" className="py-20 sm:py-24 px-4 max-w-7xl mx-auto relative scroll-mt-20">
@@ -54,30 +52,17 @@ export default function CertificationsSection({ certifications }: Certifications
           </p>
         </div>
 
-        {/* Top-Right Corner Button: Toggles View All or navigates */}
-        <div className="flex items-center gap-3">
-          {hasMore ? (
-            <button
-              type="button"
-              onClick={() => setShowAll(!showAll)}
-              className="group/btn relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl overflow-hidden cursor-pointer"
-              title={showAll ? "Show fewer certificates" : "View all certificates"}
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
-              <span>{showAll ? "Show Less" : "View All"}</span>
-              <ArrowRight className={`w-3.5 h-3.5 transition-transform duration-300 ${showAll ? "-rotate-90" : "group-hover/btn:translate-x-1"}`} />
-            </button>
-          ) : (
-            <Link
-              href="/certificates"
-              className="group/btn relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl overflow-hidden cursor-pointer"
-              title="View all certificates"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
-              <span>View All</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-            </Link>
-          )}
+        {/* Top-Right Corner Button to navigate to dedicated certificates page (just like in Projects section) */}
+        <div className="flex items-center">
+          <Link
+            href="/certificates"
+            className="group/btn relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl overflow-hidden cursor-pointer"
+            title="View all certificates"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
+            <span>View All</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
 
@@ -181,36 +166,16 @@ export default function CertificationsSection({ certifications }: Certifications
         </div>
       )}
 
-      {/* View All / Balance toggle button below grid */}
-      {hasMore && !showAll && (
+      {/* Bottom Link to dedicated certificates page (matching Project section) */}
+      {certifications.length > 3 && (
         <div className="mt-10 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setShowAll(true)}
+          <Link
+            href="/certificates"
             className="group/btn relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl overflow-hidden cursor-pointer"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
-            <span>View All Certificates ({filteredCerts.length})</span>
+            <span>View All Certificates ({certifications.length})</span>
             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-          </button>
-        </div>
-      )}
-
-      {hasMore && showAll && (
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <button
-            type="button"
-            onClick={() => setShowAll(false)}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-card hover:bg-surface border border-border text-xs sm:text-sm font-semibold text-text-secondary hover:text-foreground transition-all cursor-pointer shadow-xs"
-          >
-            Show Less
-          </button>
-          <Link
-            href="/certificates"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-card hover:bg-surface-card-hover border border-border hover:border-text-tan text-foreground text-xs sm:text-sm font-bold shadow-xs hover:scale-105 transition-all"
-          >
-            <span>Full Credentials Registry</span>
-            <ArrowRight className="w-3.5 h-3.5 text-text-tan" />
           </Link>
         </div>
       )}
