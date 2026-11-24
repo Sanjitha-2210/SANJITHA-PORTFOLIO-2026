@@ -144,12 +144,15 @@ export default function ProfileCard({ profile, className = "" }: ProfileCardProp
       <div className="relative z-10 h-[1px] w-full my-3 sm:my-3.5 bg-[rgba(237,232,220,0.12)] dark:bg-[#D6CFBF]/70" />
 
       {/* Section: A little about me */}
-      <div className="relative z-10">
+      <div className="relative z-10 space-y-2">
         <h3 className="text-xs sm:text-[14px] font-bold text-[#EDE8DC] dark:text-[#1F2A24] tracking-tight uppercase tracking-wider text-opacity-90">
-          A little about me
+          A Little About Me
         </h3>
-        <p className="text-[13px] sm:text-[14px] text-[#BDB7A8] dark:text-[#5A5E55] mt-1 leading-relaxed font-normal">
-          {bio}
+        <p className="text-[12.5px] sm:text-[13px] text-[#BDB7A8] dark:text-[#5A5E55] leading-relaxed font-normal">
+          I&apos;m a curious problem-solver who enjoys exploring new technologies, experimenting with ideas, and building things from scratch.
+        </p>
+        <p className="text-[12.5px] sm:text-[13px] text-[#BDB7A8] dark:text-[#5A5E55] leading-relaxed font-normal">
+          I believe in learning by doing, collaborating with others, and continuously improving through every project and experience.
         </p>
       </div>
 

@@ -424,31 +424,17 @@ const defaultSkills: Skill[] = [
 const defaultExperience: Experience[] = [
   {
     id: 1,
-    role: "Principal Solutions Architect",
-    company: "Apex Distributed Labs",
-    company_url: "https://example.com",
-    location: "San Francisco, CA",
-    start_date: "2023",
-    end_date: "Present",
-    is_current: true,
-    description: "Leading architecture for multi-tenant microservices serving 10M+ daily active developers.",
-    bullet_points: "Architected high-throughput ingestion pipelines handling 50k RPS with sub-30ms latency.\nSpearheaded migration to Next.js enterprise micro-frontends, improving Core Web Vitals score to 99/100.\nMentored 18 senior engineers across distributed systems and UI design token systems.",
+    role: "Full Stack Developer Intern",
+    company: "PhobosQ",
+    company_url: "",
+    location: "Coimbatore, India (Hybrid)",
+    start_date: "APR 2025",
+    end_date: "OCT 2025",
+    is_current: false,
+    description: "Tech Stack: Python, FastAPI, Next.js, PostgreSQL, REST APIs",
+    bullet_points: "Full-Stack Blogging Platform Development: Developed a full-stack blogging platform using FastAPI and Next.js, integrating frontend and backend components to deliver a functional web application.\nRESTAPI Development: Designed and implemented RESTful APIs for user authentication, profile management, and blog operations using FastAPI.\nDatabase Integration: Integrated PostgreSQL to manage user accounts, blog content, and application data, ensuring efficient database operations.\nApplication Feature Development: Developed authentication, user profile, and blog management modules, enabling seamless interaction between frontend and backend components.",
     status: "published",
     order_index: 1
-  },
-  {
-    id: 2,
-    role: "Senior Full-Stack Engineer",
-    company: "Vortex Cloud Systems",
-    company_url: "https://example.com",
-    location: "Seattle, WA",
-    start_date: "2021",
-    end_date: "2023",
-    is_current: false,
-    description: "Designed and delivered cloud monitoring dashboard and real-time incident automation tools.",
-    bullet_points: "Built real-time telemetry visualizer reducing MTTR by 35%.\nImplemented secure JWT role-based access control and OAuth2 SSO across 12 internal portals.",
-    status: "published",
-    order_index: 2
   }
 ];
 

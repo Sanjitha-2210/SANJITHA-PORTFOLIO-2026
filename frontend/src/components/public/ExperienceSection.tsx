@@ -15,8 +15,8 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
           <Briefcase className="w-3.5 h-3.5" />
           <span>CHAPTERS OF EXPERIENCE</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-          Internship Journey
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight uppercase">
+          Internship Experience
         </h2>
         <p className="text-sm text-text-secondary mt-2 max-w-xl">
           Every opportunity bringing new skills, challenges, and perspectives.
@@ -76,20 +76,29 @@ export default function ExperienceSection({ experience }: ExperienceSectionProps
                 </div>
 
                 {item.description && (
-                  <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
-                    {item.description}
-                  </p>
+                  <div className="pt-1">
+                    {item.description.startsWith("Tech Stack:") ? (
+                      <div className="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-xl bg-tag-bg border border-tag-border text-tag-text text-xs font-mono font-medium">
+                        <span className="font-bold text-text-tan">Tech Stack:</span>
+                        <span>{item.description.replace(/^Tech Stack:\s*/i, "")}</span>
+                      </div>
+                    ) : (
+                      <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
                 )}
 
                 {bulletList.length > 0 && (
-                  <ul className="space-y-2 pt-2 border-t border-border">
+                  <ul className="space-y-2.5 pt-2 border-t border-border">
                     {bulletList.map((bullet, idx) => (
-                      <li key={idx} className="text-xs text-text-secondary flex items-start gap-2.5">
+                      <li key={idx} className="text-xs sm:text-[13px] text-text-secondary flex items-start gap-2.5 leading-relaxed">
                         <span 
-                          className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" 
+                          className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" 
                           style={{ backgroundColor: "var(--text-tan)" }}
                         />
-                        <span>{bullet}</span>
+                        <span>{bullet.replace(/^[•\-\*]\s*/, "")}</span>
                       </li>
                     ))}
                   </ul>

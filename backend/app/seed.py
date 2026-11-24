@@ -158,52 +158,27 @@ def seed_database(db: Session):
         db.commit()
         print(f"✓ Seeded {len(skills)} skills")
 
-    # 5. Experience
-    if db.query(Experience).count() == 0:
-        experiences = [
-            Experience(
-                role="Principal Solutions Architect",
-                company="Apex Distributed Labs",
-                company_url="https://example.com",
-                location="San Francisco, CA",
-                start_date="2023",
-                end_date="Present",
-                is_current=True,
-                description="Leading architecture for multi-tenant microservices serving 10M+ daily active developers.",
-                bullet_points="Architected high-throughput ingestion pipelines handling 50k RPS with sub-30ms latency.\nSpearheaded migration to Next.js enterprise micro-frontends, improving Core Web Vitals score to 99/100.\nMentored 18 senior engineers across distributed systems and UI design token systems.",
-                status="published",
-                order_index=1
-            ),
-            Experience(
-                role="Senior Full-Stack Engineer",
-                company="Vortex Cloud Systems",
-                company_url="https://example.com",
-                location="Seattle, WA",
-                start_date="2021",
-                end_date="2023",
-                is_current=False,
-                description="Designed and delivered cloud monitoring dashboard and real-time incident automation tools.",
-                bullet_points="Built real-time telemetry visualizer reducing MTTR (Mean Time to Resolution) by 35%.\nImplemented secure JWT role-based access control and OAuth2 SSO across 12 internal portals.\nCreated comprehensive CI/CD pipelines with automated end-to-end testing.",
-                status="published",
-                order_index=2
-            ),
-            Experience(
-                role="Full-Stack Developer",
-                company="Quantum Leap Software",
-                company_url="https://example.com",
-                location="Remote",
-                start_date="2019",
-                end_date="2021",
-                is_current=False,
-                description="Developed customer-facing web apps and resilient REST/GraphQL backend services.",
-                bullet_points="Engineered responsive responsive SPAs with Next.js and Tailwind CSS.\nMaintained 99.98% database availability across SQLite/PostgreSQL clusters.",
-                status="published",
-                order_index=3
-            )
-        ]
-        db.add_all(experiences)
+    # 5. Experience / Internship
+    # Ensure only the real PhobosQ internship experience exists
+    existing_exp = db.query(Experience).all()
+    if not existing_exp or any(e.company != "PhobosQ" for e in existing_exp):
+        db.query(Experience).delete()
+        phobos_exp = Experience(
+            role="Full Stack Developer Intern",
+            company="PhobosQ",
+            company_url="",
+            location="Coimbatore, India (Hybrid)",
+            start_date="APR 2025",
+            end_date="OCT 2025",
+            is_current=False,
+            description="Tech Stack: Python, FastAPI, Next.js, PostgreSQL, REST APIs",
+            bullet_points="• Full-Stack Blogging Platform Development: Developed a full-stack blogging platform using FastAPI and Next.js, integrating frontend and backend components to deliver a functional web application.\n• RESTAPI Development: Designed and implemented RESTful APIs for user authentication, profile management, and blog operations using FastAPI.\n• Database Integration: Integrated PostgreSQL to manage user accounts, blog content, and application data, ensuring efficient database operations.\n• Application Feature Development: Developed authentication, user profile, and blog management modules, enabling seamless interaction between frontend and backend components.",
+            status="published",
+            order_index=1
+        )
+        db.add(phobos_exp)
         db.commit()
-        print(f"✓ Seeded {len(experiences)} experience entries")
+        print("✓ Updated experience table with PhobosQ Internship")
 
     # 6. Certifications: Ensure all 11 real certifications exist
     certs = [
