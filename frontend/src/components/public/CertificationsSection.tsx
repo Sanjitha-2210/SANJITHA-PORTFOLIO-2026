@@ -166,19 +166,7 @@ export default function CertificationsSection({ certifications }: Certifications
         </div>
       )}
 
-      {/* Bottom Link to dedicated certificates page (matching Project section) */}
-      {certifications.length > 3 && (
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/certificates"
-            className="group/btn relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-btn-bg text-btn-text hover:bg-btn-hover font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl overflow-hidden cursor-pointer"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
-            <span>View All Certificates ({certifications.length})</span>
-            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-      )}
+
 
       {/* ======================================================== */}
       {/* 1. PREVIEW MODAL — GLASS CARD WITH SEAMLESS FIT          */}
