@@ -4,7 +4,7 @@ import { ArrowDown, Briefcase, Sparkles } from "lucide-react";
 
 export default function ProjectsToExperienceSeparator() {
   return (
-    <div className="relative py-12 sm:py-16 max-w-6xl mx-auto px-4 sm:px-8 select-none">
+    <div className="relative py-10 sm:py-12 max-w-6xl mx-auto px-4 sm:px-8 select-none">
       {/* Background Soft Glow Halo */}
       <div className="absolute inset-x-1/4 top-1/2 -translate-y-1/2 h-12 bg-gradient-to-r from-text-tan/0 via-text-tan/10 to-text-tan/0 blur-2xl pointer-events-none" />
 

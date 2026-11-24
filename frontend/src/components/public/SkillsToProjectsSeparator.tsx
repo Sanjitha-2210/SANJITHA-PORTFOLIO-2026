@@ -4,7 +4,7 @@ import { Sparkles, ArrowDown, FolderGit2 } from "lucide-react";
 
 export default function SkillsToProjectsSeparator() {
   return (
-    <div className="relative py-10 sm:py-14 max-w-6xl mx-auto px-4 sm:px-8 select-none">
+    <div className="relative py-10 sm:py-12 max-w-6xl mx-auto px-4 sm:px-8 select-none">
       <div className="relative flex items-center justify-between gap-3 sm:gap-6">
         {/* Left Decorative Line with Gradient & Diamond Accent */}
         <div className="flex-1 relative flex items-center">

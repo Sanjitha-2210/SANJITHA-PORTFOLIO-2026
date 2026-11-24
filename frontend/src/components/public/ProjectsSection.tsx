@@ -53,7 +53,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
     <section
       ref={sectionRef}
       id="projects"
-      className="pt-10 sm:pt-14 pb-20 sm:pb-24 px-4 max-w-7xl mx-auto relative scroll-mt-20"
+      className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20"
     >
       {/* Section Header */}
       <div

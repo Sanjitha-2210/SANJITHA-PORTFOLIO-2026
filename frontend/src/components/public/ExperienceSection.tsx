@@ -9,7 +9,7 @@ interface ExperienceSectionProps {
 
 export default function ExperienceSection({ experience }: ExperienceSectionProps) {
   return (
-    <section id="experience" className="py-20 sm:py-24 px-4 max-w-7xl mx-auto relative scroll-mt-20">
+    <section id="experience" className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20">
       {/* Section Header - Full width left-aligned matching rest of portfolio */}
       <div className="mb-10 sm:mb-12">
         <div className="flex items-center gap-2 text-text-tan font-mono text-xs tracking-wider uppercase mb-2 font-bold">

@@ -22,6 +22,7 @@ import ProjectsToExperienceSeparator from "@/components/public/ProjectsToExperie
 import ExperienceSection from "@/components/public/ExperienceSection";
 import ExperienceToCertificationsSeparator from "@/components/public/ExperienceToCertificationsSeparator";
 import CertificationsSection from "@/components/public/CertificationsSection";
+import CertificationsToContactSeparator from "@/components/public/CertificationsToContactSeparator";
 import ContactSection from "@/components/public/ContactSection";
 import TerminalHUD from "@/components/public/TerminalHUD";
 import RobotChatbot from "@/components/public/RobotChatbot";
@@ -33,7 +34,7 @@ const defaultProfile: Profile = {
   title: "GenAI Application Developer",
   bio: "Building intelligent solutions with Generative AI, Machine Learning and modern web technologies.",
   location: "Coimbatore, Tamil Nadu, India",
-  email: "sanjitha102206@gmail.com",
+  email: "sanjithamageshwari@gmail.com",
   github: "https://github.com",
   linkedin: "https://www.linkedin.com/in/sanjitha-e-824762353/",
   twitter: "https://x.com",
@@ -606,6 +607,7 @@ export default function PublicHomePage() {
         <ExperienceSection experience={experience} />
         <ExperienceToCertificationsSeparator />
         <CertificationsSection certifications={certifications} />
+        <CertificationsToContactSeparator />
         <ContactSection />
       </main>
 

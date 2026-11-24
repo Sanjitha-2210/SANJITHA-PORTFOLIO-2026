@@ -24,7 +24,7 @@ def seed_database(db: Session):
             title="GenAI Application Developer",
             bio="I'm passionate about building intelligent solutions using Generative AI, Machine Learning and modern web technologies.",
             location="Bengaluru, India / Remote",
-            email="sanjitha.e.dev@gmail.com",
+            email="sanjithamageshwari@gmail.com",
             github="https://github.com",
             linkedin="https://linkedin.com",
             twitter="https://x.com",

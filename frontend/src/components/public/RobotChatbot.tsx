@@ -215,7 +215,7 @@ export default function RobotChatbot({
     // 4. Contact / Hire
     if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("reach") || q.includes("message")) {
       return {
-        text: `📬 You can reach Sanjitha directly at **sanjitha.e.dev@gmail.com**, or drop a message right in the contact section below. She is open to impactful engineering opportunities!`,
+        text: `📬 You can reach Sanjitha directly at **sanjithamageshwari@gmail.com**, or drop a message right in the contact section below. She is open to impactful engineering opportunities!`,
         action: { label: "Go to Contact Form", targetId: "contact" }
       };
     }

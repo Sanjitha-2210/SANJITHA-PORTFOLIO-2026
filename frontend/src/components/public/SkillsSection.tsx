@@ -410,7 +410,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
     <section 
       id="skills" 
       ref={sectionRef} 
-      className="pt-16 sm:pt-20 pb-24 px-4 max-w-7xl mx-auto relative select-none"
+      className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative select-none scroll-mt-20"
     >
       
       {/* 1. Header with ThoughtWorks Radar Eyebrow */}

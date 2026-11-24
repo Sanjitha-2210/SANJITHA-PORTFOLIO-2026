@@ -4,7 +4,7 @@ import { GraduationCap, Code2, ArrowRight } from "lucide-react";
 
 export default function TheoryToPracticeBridge() {
   return (
-    <div className="relative pt-12 sm:pt-16 pb-7 sm:pb-9 max-w-6xl mx-auto px-4 sm:px-8 select-none">
+    <div className="relative py-10 sm:py-12 max-w-6xl mx-auto px-4 sm:px-8 select-none">
       <div className="group/bridge relative flex items-center justify-between">
         
         {/* ========================================================= */}

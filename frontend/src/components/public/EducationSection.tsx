@@ -320,10 +320,10 @@ export default function EducationSection({ education, milestones }: EducationSec
     <section 
       id="education" 
       ref={sectionRef}
-      className="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10"
+      className="pt-6 sm:pt-8 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10"
     >
       {/* 1. FADING LINE WITH A NODE SEPARATOR BETWEEN HERO AND ACADEMIC JOURNEY */}
-      <div className="group/separator w-full max-w-5xl sm:max-w-6xl mx-auto flex items-center justify-center mb-16 sm:mb-20 select-none">
+      <div className="group/separator w-full max-w-5xl sm:max-w-6xl mx-auto flex items-center justify-center mb-12 sm:mb-16 select-none">
         {/* Left fading tan line */}
         <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#C6A06B]/30 to-[#B08D5E]/85 transition-all duration-500 group-hover/separator:via-[#C6A06B]/60 group-hover/separator:to-[#D4B07C]" />
         

@@ -36,7 +36,7 @@ export default function CertificationsSection({ certifications }: Certifications
   const displayedCerts = filteredCerts.slice(0, 3);
 
   return (
-    <section id="certifications" className="py-20 sm:py-24 px-4 max-w-7xl mx-auto relative scroll-mt-20">
+    <section id="certifications" className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 max-w-7xl mx-auto relative scroll-mt-20">
       {/* Section Header with Top-Right View All Button */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-6">
         <div>

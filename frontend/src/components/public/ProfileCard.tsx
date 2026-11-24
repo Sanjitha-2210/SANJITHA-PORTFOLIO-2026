@@ -264,7 +264,7 @@ export default function ProfileCard({ profile, className = "" }: ProfileCardProp
             <Linkedin className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
           </a>
           <a
-            href={`mailto:${profile?.email || "sanjitha.e.dev@gmail.com"}`}
+            href={`mailto:${profile?.email || "sanjithamageshwari@gmail.com"}`}
             className="text-[#EDE8DC]/80 dark:text-[#1F2A24]/85 hover:text-[#D4B07C] dark:hover:text-[#7A5C30] hover:-translate-y-1 hover:scale-115 transition-all duration-200 p-0.5"
             title="Send Email"
           >

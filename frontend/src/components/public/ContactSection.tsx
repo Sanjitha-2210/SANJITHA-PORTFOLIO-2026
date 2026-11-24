@@ -23,7 +23,7 @@ export default function ContactSection() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const phoneText = "+91 9047980462";
-  const emailText = "sanjitha102206@gmail.com";
+  const emailText = "sanjithamageshwari@gmail.com";
   const locationText = "Coimbatore, Tamil Nadu";
 
   const handleCopy = (text: string, type: "phone" | "email") => {
@@ -97,7 +97,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-24 px-4 max-w-6xl mx-auto relative scroll-mt-20">
+    <section id="contact" className="pt-12 sm:pt-16 pb-20 sm:pb-24 px-4 max-w-6xl mx-auto relative scroll-mt-20">
       {/* Centered Heading matching UI design */}
       <div className="text-center mb-10 sm:mb-12">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">
