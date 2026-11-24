@@ -9,10 +9,16 @@ export const getApiBaseUrl = () => {
     return process.env.NEXT_PUBLIC_API_URL;
   }
   if (typeof window !== "undefined") {
-    const host = window.location.hostname || "localhost";
-    return `http://${host}:8000/api`;
+    const isLocalhost = 
+      window.location.hostname === "localhost" || 
+      window.location.hostname === "127.0.0.1";
+    if (isLocalhost) {
+      return "http://127.0.0.1:8000/api";
+    }
+    // When hosted on Vercel or any remote domain, connect to the production Render backend
+    return "https://sanjitha-portfolio-api.onrender.com/api";
   }
-  return "http://127.0.0.1:8000/api";
+  return "https://sanjitha-portfolio-api.onrender.com/api";
 };
 
 export const API_BASE_URL = getApiBaseUrl();
@@ -675,15 +681,32 @@ export async function adminDeleteMessage(id: number) {
 
 // ---------------- MEDIA UPLOAD ----------------
 export async function uploadMedia(file: File): Promise<{ url: string; storage: string }> {
-  const base = getApiBaseUrl();
+  let base = getApiBaseUrl();
   const formData = new FormData();
   formData.append("file", file);
 
-  let res = await fetch(`${base}/upload`, {
-    method: "POST",
-    headers: getHeaders(true),
-    body: formData,
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${base}/upload`, {
+      method: "POST",
+      headers: getHeaders(true),
+      body: formData,
+    });
+  } catch (netErr) {
+    // If local fetch failed (e.g. local backend port 8000 is not running), fallback to live cloud Render backend
+    const cloudUrl = "https://sanjitha-portfolio-api.onrender.com/api";
+    if (base !== cloudUrl) {
+      console.warn("Upload to local backend failed. Retrying with production cloud API...", netErr);
+      base = cloudUrl;
+      res = await fetch(`${base}/upload`, {
+        method: "POST",
+        headers: getHeaders(true),
+        body: formData,
+      });
+    } else {
+      throw netErr;
+    }
+  }
 
   // If 401 Unauthorized, automatically try to renew the session and retry once
   if (res.status === 401) {

@@ -457,24 +457,37 @@ export default function ProjectCaseStudyView({
           </p>
 
           {project.video_url ? (
-            <div className="rounded-2xl overflow-hidden border border-border bg-black shadow-lg">
-              <div className="px-4 py-2 bg-surface/95 border-b border-border flex items-center justify-between text-xs font-mono text-text-tan">
-                <span className="flex items-center gap-2 font-semibold">
-                  <Video className="w-4 h-4 text-emerald-500" />
-                  <span>{project.title} — Demonstration Video</span>
-                </span>
-                <span className="text-[11px] opacity-70">Cloudinary CDN Stream</span>
-              </div>
-              <div className="relative w-full bg-black flex items-center justify-center">
-                <video
-                  src={project.video_url}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  className="w-full max-h-[580px] bg-black object-contain mx-auto"
-                />
-              </div>
-            </div>
+            (() => {
+              const isImage = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(project.video_url);
+              return (
+                <div className="rounded-2xl overflow-hidden border border-border bg-black shadow-lg">
+                  <div className="px-4 py-2 bg-surface/95 border-b border-border flex items-center justify-between text-xs font-mono text-text-tan">
+                    <span className="flex items-center gap-2 font-semibold">
+                      {isImage ? <ImageIcon className="w-4 h-4 text-emerald-500" /> : <Video className="w-4 h-4 text-emerald-500" />}
+                      <span>{project.title} — {isImage ? "Architecture & Demo Specification" : "Demonstration Video"}</span>
+                    </span>
+                    <span className="text-[11px] opacity-70">Cloudinary CDN {isImage ? "HD Image" : "Stream"}</span>
+                  </div>
+                  <div className="relative w-full bg-black flex items-center justify-center p-2">
+                    {isImage ? (
+                      <img
+                        src={project.video_url}
+                        alt={`${project.title} Demonstration`}
+                        className="w-full max-h-[640px] object-contain rounded-lg mx-auto"
+                      />
+                    ) : (
+                      <video
+                        src={project.video_url}
+                        controls
+                        playsInline
+                        preload="metadata"
+                        className="w-full max-h-[580px] bg-black object-contain mx-auto"
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })()
           ) : (
             <div className="p-8 rounded-2xl bg-surface-card border border-dashed border-border text-center space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center mx-auto text-text-tan">

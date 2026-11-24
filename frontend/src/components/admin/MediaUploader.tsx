@@ -22,8 +22,7 @@ export default function MediaUploader({
   const [storageInfo, setStorageInfo] = useState<string | null>(null);
 
   const isVideo =
-    mediaType === "video" ||
-    (currentUrl && /\.(mp4|webm|mov|mkv|m4v|avi)(\?.*)?$/i.test(currentUrl));
+    currentUrl && /\.(mp4|webm|mov|mkv|m4v|avi)(\?.*)?$/i.test(currentUrl);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,7 +44,7 @@ export default function MediaUploader({
 
   const acceptAttribute =
     mediaType === "video"
-      ? "video/mp4,video/webm,video/quicktime,video/*"
+      ? "video/*,image/*,.mp4,.webm,.mov,.mkv,.avi,.jpg,.jpeg,.png,.webp,.gif"
       : mediaType === "image"
       ? "image/*"
       : "image/*,video/*,.pdf";
