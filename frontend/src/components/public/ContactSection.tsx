@@ -4,7 +4,7 @@ import { useState } from "react";
 import { submitContactForm } from "@/lib/api";
 import { 
   Phone, Mail, MapPin, Copy, Check, Download, 
-  Linkedin, Github, Globe, Twitter, Send, CheckCircle2, AlertCircle 
+  Linkedin, Github, Globe, Send, CheckCircle2, AlertCircle 
 } from "lucide-react";
 
 export default function ContactSection() {
@@ -23,7 +23,7 @@ export default function ContactSection() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const phoneText = "+91 9047980462";
-  const emailText = "sanjithamageshwar@gmail.com";
+  const emailText = "sanjitha102206@gmail.com";
   const locationText = "Coimbatore, Tamil Nadu";
 
   const handleCopy = (text: string, type: "phone" | "email") => {
@@ -114,24 +114,24 @@ export default function ContactSection() {
         {/* ======================================================== */}
         {/* LEFT CARD: Contact Information                           */}
         {/* ======================================================== */}
-        <div className="lg:col-span-5 rounded-3xl bg-surface-card border border-border p-6 sm:p-8 flex flex-col justify-between shadow-lg relative overflow-hidden group">
+        <div className="lg:col-span-5 rounded-3xl bg-surface-card border border-border p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:shadow-[0_20px_45px_rgba(212,176,124,0.14)] dark:hover:shadow-[0_20px_45px_rgba(212,176,124,0.2)] hover:border-text-tan/60 hover:-translate-y-1.5 transition-all duration-500 ease-out relative overflow-hidden group">
           {/* Subtle ambient corner glow */}
           <div 
-            className="absolute -top-12 -left-12 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-20 dark:opacity-30"
+            className="absolute -top-12 -left-12 w-56 h-56 rounded-full blur-3xl pointer-events-none opacity-20 dark:opacity-30 group-hover:opacity-40 transition-opacity duration-700"
             style={{ background: "radial-gradient(circle, var(--text-tan) 0%, transparent 70%)" }}
           />
 
           <div className="relative z-10 space-y-6">
-            <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+            <h3 className="text-lg sm:text-xl font-bold text-foreground group-hover:text-text-tan tracking-tight transition-colors duration-300">
               Contact Information
             </h3>
 
             {/* Contact entries with dividers */}
             <div className="space-y-4 pt-1">
               {/* Phone */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-border/70">
+              <div className="flex items-center justify-between pb-3.5 border-b border-border/70 p-1.5 -mx-1.5 rounded-xl hover:bg-surface/50 transition-all duration-300 group/row">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center flex-shrink-0 text-text-tan">
+                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center flex-shrink-0 text-text-tan group-hover/row:scale-105 group-hover/row:border-text-tan/60 transition-all duration-300">
                     <Phone className="w-4 h-4" />
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-foreground tracking-wide font-mono">
@@ -141,7 +141,7 @@ export default function ContactSection() {
                 <button
                   type="button"
                   onClick={() => handleCopy(phoneText, "phone")}
-                  className="p-2 rounded-lg bg-surface hover:bg-surface-card-hover border border-border text-text-secondary hover:text-text-tan transition-all cursor-pointer relative"
+                  className="p-2 rounded-lg bg-surface hover:bg-surface-card-hover border border-border hover:border-text-tan/60 text-text-secondary hover:text-text-tan hover:scale-110 active:scale-95 transition-all cursor-pointer relative"
                   title="Copy Phone Number"
                 >
                   {copiedPhone ? (
@@ -153,9 +153,9 @@ export default function ContactSection() {
               </div>
 
               {/* Email */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-border/70">
+              <div className="flex items-center justify-between pb-3.5 border-b border-border/70 p-1.5 -mx-1.5 rounded-xl hover:bg-surface/50 transition-all duration-300 group/row">
                 <div className="flex items-center gap-3 min-w-0 pr-2">
-                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center flex-shrink-0 text-text-tan">
+                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center flex-shrink-0 text-text-tan group-hover/row:scale-105 group-hover/row:border-text-tan/60 transition-all duration-300">
                     <Mail className="w-4 h-4" />
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-foreground truncate font-mono">
@@ -165,7 +165,7 @@ export default function ContactSection() {
                 <button
                   type="button"
                   onClick={() => handleCopy(emailText, "email")}
-                  className="p-2 rounded-lg bg-surface hover:bg-surface-card-hover border border-border text-text-secondary hover:text-text-tan transition-all cursor-pointer relative flex-shrink-0"
+                  className="p-2 rounded-lg bg-surface hover:bg-surface-card-hover border border-border hover:border-text-tan/60 text-text-secondary hover:text-text-tan hover:scale-110 active:scale-95 transition-all cursor-pointer relative flex-shrink-0"
                   title="Copy Email Address"
                 >
                   {copiedEmail ? (
@@ -177,8 +177,8 @@ export default function ContactSection() {
               </div>
 
               {/* Location */}
-              <div className="flex items-center gap-3 pb-2">
-                <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center flex-shrink-0 text-text-tan">
+              <div className="flex items-center gap-3 pb-2 p-1.5 -mx-1.5 rounded-xl hover:bg-surface/50 transition-all duration-300 group/row">
+                <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center flex-shrink-0 text-text-tan group-hover/row:scale-105 group-hover/row:border-text-tan/60 transition-all duration-300">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <span className="text-xs sm:text-sm font-medium text-foreground">
@@ -194,10 +194,10 @@ export default function ContactSection() {
               </h4>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/sanjitha-e-824762353/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-110 shadow-xs"
+                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-115 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(212,176,124,0.3)] shadow-xs"
                   title="LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
@@ -206,7 +206,7 @@ export default function ContactSection() {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-110 shadow-xs"
+                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-115 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(212,176,124,0.3)] shadow-xs"
                   title="GitHub"
                 >
                   <Github className="w-4 h-4" />
@@ -215,19 +215,10 @@ export default function ContactSection() {
                   href="https://sanjitha-portfolio-2026.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-110 shadow-xs"
+                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-115 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(212,176,124,0.3)] shadow-xs"
                   title="Website Portfolio"
                 >
                   <Globe className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://x.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-surface hover:bg-btn-bg border border-border hover:border-text-tan flex items-center justify-center text-text-secondary hover:text-btn-text transition-all duration-300 hover:scale-110 shadow-xs"
-                  title="Twitter / X"
-                >
-                  <Twitter className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -238,9 +229,10 @@ export default function ContactSection() {
             <button
               type="button"
               onClick={handleDownloadVCard}
-              className="w-full py-3 px-4 rounded-2xl bg-surface hover:bg-surface-card-hover border border-border hover:border-text-tan text-foreground font-bold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-xs hover:scale-[1.02] cursor-pointer"
+              className="group/vcard relative w-full py-3 px-4 rounded-2xl bg-surface hover:bg-surface-card-hover border border-border hover:border-text-tan text-foreground font-bold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-xs hover:shadow-[0_8px_20px_rgba(212,176,124,0.18)] hover:-translate-y-0.5 active:scale-95 cursor-pointer overflow-hidden"
             >
-              <Download className="w-4 h-4 text-text-tan" />
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-text-tan/10 to-transparent -translate-x-full group-hover/vcard:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
+              <Download className="w-4 h-4 text-text-tan group-hover/vcard:scale-110 transition-transform duration-300" />
               <span>Download vCard</span>
             </button>
           </div>
@@ -249,7 +241,12 @@ export default function ContactSection() {
         {/* ======================================================== */}
         {/* RIGHT CARD: Contact Form                                 */}
         {/* ======================================================== */}
-        <div className="lg:col-span-7 rounded-3xl bg-surface-card border border-border p-6 sm:p-8 flex flex-col justify-between shadow-lg relative">
+        <div className="lg:col-span-7 rounded-3xl bg-surface-card border border-border p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:shadow-[0_20px_45px_rgba(212,176,124,0.14)] dark:hover:shadow-[0_20px_45px_rgba(212,176,124,0.2)] hover:border-text-tan/60 hover:-translate-y-1.5 transition-all duration-500 ease-out relative overflow-hidden group">
+          {/* Subtle ambient hover glow */}
+          <div 
+            className="absolute -top-16 -right-16 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-20 dark:group-hover:opacity-30 transition-opacity duration-700 ease-out"
+            style={{ background: "radial-gradient(circle, var(--text-tan) 0%, transparent 70%)" }}
+          />
           
           {status === "success" && (
             <div 
@@ -272,7 +269,7 @@ export default function ContactSection() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
             {/* Row 1: First Name* */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-2">
